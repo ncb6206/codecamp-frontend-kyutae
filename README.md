@@ -1,1 +1,1 @@
-# codecamp-frontend-kyutae
+코드캠프 프론트엔드 학습 과정 레포지토리입니다.
