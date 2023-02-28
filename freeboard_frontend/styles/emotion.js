@@ -166,3 +166,11 @@ export const SubmitButton = styled.button`
   line-height: 24px;
   cursor: pointer;
 `;
+
+export const ErrorMessage = styled.div`
+  margin-top: 10px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  color: red;
+`;
