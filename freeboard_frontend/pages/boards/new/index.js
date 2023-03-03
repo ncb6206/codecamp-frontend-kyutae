@@ -24,21 +24,19 @@ import {
   ErrorMessage,
 } from "../../../styles/emotion";
 import { gql, useMutation } from "@apollo/client";
+import { useRouter } from "next/router";
 
 const CREATE_BOARD = gql`
   mutation createBoard($createBoardInput: CreateBoardInput!) {
-    # 변수의 타입 적는 곳
     createBoard(createBoardInput: $createBoardInput) {
-      # 실제 우리가 전달할 변수 적는 곳
       _id
-      writer
-      title
-      contents
     }
   }
 `;
 
 export default function BoardWriteUI() {
+  const router = useRouter();
+
   const [writer, setWriter] = useState("");
   const [password, setPassword] = useState("");
   const [title, setTitle] = useState("");
@@ -51,25 +49,25 @@ export default function BoardWriteUI() {
 
   const [createBoard] = useMutation(CREATE_BOARD);
 
-  const changeWriter = (event) => {
+  const onChangeWriter = (event) => {
     setWriter(event.target.value);
     if (event.target.value !== "") {
       setWriterError("");
     }
   };
-  const changePassword = (event) => {
+  const onChangePassword = (event) => {
     setPassword(event.target.value);
     if (event.target.value !== "") {
       setPasswordError("");
     }
   };
-  const changeTitle = (event) => {
+  const onChangeTitle = (event) => {
     setTitle(event.target.value);
     if (event.target.value !== "") {
       setTitleError("");
     }
   };
-  const changeContents = (event) => {
+  const onChangeContents = (event) => {
     setContents(event.target.value);
     if (event.target.value !== "") {
       setContentsError("");
@@ -93,18 +91,23 @@ export default function BoardWriteUI() {
       setContentsError("작성자를 입력해주세요!");
     }
     if (writer && password && title && contents) {
-      const result = await createBoard({
-        variables: {
-          createBoardInput: {
-            writer,
-            password,
-            title,
-            contents,
+      try {
+        const result = await createBoard({
+          variables: {
+            createBoardInput: {
+              writer,
+              password,
+              title,
+              contents,
+            },
           },
-        },
-      });
-      console.log(result);
-      alert("게시글이 등록되었씁니다!!");
+        });
+        console.log(result);
+        alert("게시글이 등록되었씁니다!!");
+        router.push(`/boards/${result.data.createBoard._id}`);
+      } catch (error) {
+        alert(error.message);
+      }
     }
   };
 
@@ -114,7 +117,7 @@ export default function BoardWriteUI() {
       <WriterWrapper>
         <InputWrapper>
           <Label>작성자</Label>
-          <Writer type="text" placeholder="이름을 적어주세요" onChange={changeWriter} />
+          <Writer type="text" placeholder="이름을 적어주세요" onChange={onChangeWriter} />
           <ErrorMessage>{writerError}</ErrorMessage>
         </InputWrapper>
         <InputWrapper>
@@ -122,19 +125,19 @@ export default function BoardWriteUI() {
           <Password
             type="password"
             placeholder="비밀번호를 입력해주세요"
-            onChange={changePassword}
+            onChange={onChangePassword}
           />
           <ErrorMessage>{passwordError}</ErrorMessage>
         </InputWrapper>
       </WriterWrapper>
       <InputWrapper>
         <Label>제목</Label>
-        <Subject type="text" placeholder="제목을 작성해주세요." onChange={changeTitle} />
+        <Subject type="text" placeholder="제목을 작성해주세요." onChange={onChangeTitle} />
         <ErrorMessage>{titleError}</ErrorMessage>
       </InputWrapper>
       <InputWrapper>
         <Label>내용</Label>
-        <Contents type="text" placeholder="내용을 작성해주세요." onChange={changeContents} />
+        <Contents type="text" placeholder="내용을 작성해주세요." onChange={onChangeContents} />
         <ErrorMessage>{contentsError}</ErrorMessage>
       </InputWrapper>
       <InputWrapper>
