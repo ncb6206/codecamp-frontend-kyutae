@@ -96,10 +96,10 @@ export default function BoardWriteUI() {
       const result = await createBoard({
         variables: {
           createBoardInput: {
-            writer: writer,
-            password: password,
-            title: title,
-            contents: contents,
+            writer,
+            password,
+            title,
+            contents,
           },
         },
       });
