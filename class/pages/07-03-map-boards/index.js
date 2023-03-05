@@ -25,18 +25,16 @@ export default function StaticRoutedPage() {
 
   return (
     <>
-      {data?.fetchBoards.map(
-        (el = (
-          <Row>
-            <Column>
-              <input type="checkbox" />
-            </Column>
-            <Column>{el.number}</Column>
-            <Column>{el.title}</Column>
-            <Column>{el.contents}</Column>
-          </Row>
-        ))
-      )}
+      {data?.fetchBoards.map((el) => (
+        <Row>
+          <Column>
+            <input type="checkbox" />
+          </Column>
+          <Column>{el.number}</Column>
+          <Column>{el.title}</Column>
+          <Column>{el.contents}</Column>
+        </Row>
+      ))}
     </>
   );
 }

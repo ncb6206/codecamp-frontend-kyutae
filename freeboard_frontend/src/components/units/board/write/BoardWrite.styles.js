@@ -161,7 +161,7 @@ export const ButtonWrapper = styled.div`
 `;
 
 export const SubmitButton = styled.button`
-  background: #ffd600;
+  background: ${(props) => (props.isTrue ? "#ffd600" : "#f2f2f2")};
   border: none;
   padding: 14px 60px;
   font-size: 16px;

@@ -10,6 +10,7 @@ export default function BoardWriteUI({
   passwordError,
   titleError,
   contentsError,
+  isTrue,
 }) {
   return (
     <S.Wrapper>
@@ -57,7 +58,7 @@ export default function BoardWriteUI({
         <S.ErrorMessage></S.ErrorMessage>
       </S.InputWrapper>
       <S.ImageWrapper>
-        <S.abel>사진 첨부</S.abel>
+        <S.Label>사진 첨부</S.Label>
         <S.UploadButton>+</S.UploadButton>
         <S.UploadButton>+</S.UploadButton>
         <S.UploadButton>+</S.UploadButton>
@@ -70,7 +71,9 @@ export default function BoardWriteUI({
         <S.RadioLabel for="picture">사진</S.RadioLabel>
       </S.OptionWrapper>
       <S.ButtonWrapper>
-        <S.SubmitButton onClick={onClickSubmit}>등록하기</S.SubmitButton>
+        <S.SubmitButton onClick={onClickSubmit} isTrue={isTrue}>
+          등록하기
+        </S.SubmitButton>
       </S.ButtonWrapper>
     </S.Wrapper>
   );

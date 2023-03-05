@@ -11,7 +11,7 @@ export default function BoardWrite() {
   const [password, setPassword] = useState("");
   const [title, setTitle] = useState("");
   const [contents, setContents] = useState("");
-
+  const [isTrue, setIsTrue] = useState(false);
   const [writerError, setWriterError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [titleError, setTitleError] = useState("");
@@ -24,23 +24,46 @@ export default function BoardWrite() {
     if (event.target.value !== "") {
       setWriterError("");
     }
+    if (event.target.value && password && title && contents) {
+      setIsTrue(true);
+    } else {
+      setIsTrue(false);
+    }
   };
+
   const onChangePassword = (event) => {
     setPassword(event.target.value);
     if (event.target.value !== "") {
       setPasswordError("");
     }
+    if (writer && event.target.value && title && contents) {
+      setIsTrue(true);
+    } else {
+      setIsTrue(false);
+    }
   };
+
   const onChangeTitle = (event) => {
     setTitle(event.target.value);
     if (event.target.value !== "") {
       setTitleError("");
     }
+    if (writer && password && event.target.value && contents) {
+      setIsTrue(true);
+    } else {
+      setIsTrue(false);
+    }
   };
+
   const onChangeContents = (event) => {
     setContents(event.target.value);
     if (event.target.value !== "") {
       setContentsError("");
+    }
+    if (writer && password && title && event.target.value) {
+      setIsTrue(true);
+    } else {
+      setIsTrue(false);
     }
   };
 
@@ -92,6 +115,7 @@ export default function BoardWrite() {
       onChangeTitle={onChangeTitle}
       onChangeContents={onChangeContents}
       onClickSubmit={onClickSubmit}
+      isTrue={isTrue}
     />
   );
 }
