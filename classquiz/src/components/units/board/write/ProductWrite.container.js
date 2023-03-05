@@ -28,7 +28,7 @@ export default function ProductWritePage() {
       });
       console.log(result);
       alert(result.data.createProduct.message);
-      router.push(`/06/boards/${result.data.createProduct._id}`);
+      router.push(`/07/products/${result.data.createProduct._id}`);
     } catch (error) {
       //try에 있는 내용을 시도하다가 실패하면, 아랫줄 모두 무시!!! 하고 catch가 실행됨
       console.log(error.message);

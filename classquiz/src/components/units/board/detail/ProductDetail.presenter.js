@@ -1,16 +1,22 @@
+import styled from "@emotion/styled";
+
+const SetProduct = styled.div``;
+const WrapperProduct = styled.div``;
+const ProductList = styled.div``;
+
 export default function ProductDetailPageUI({ productId, data }) {
   return (
     <>
-      <div>{productId}번 상품으로 등록이 완료되었습니다.</div>
+      <SetProduct>{productId}번 상품으로 등록이 완료되었습니다.</SetProduct>
       {data ? (
-        <div>
-          <div>판매자 : {data?.fetchProduct.seller}</div>
-          <div>상품명 : {data?.fetchProduct.name}</div>
-          <div>상품내용 : {data?.fetchProduct.detail}</div>
-          <div>상품가격 : {data?.fetchProduct.price}</div>
-        </div>
+        <WrapperProduct>
+          <ProductList>판매자 : {data?.fetchProduct.seller}</ProductList>
+          <ProductList>상품명 : {data?.fetchProduct.name}</ProductList>
+          <ProductList>상품내용 : {data?.fetchProduct.detail}</ProductList>
+          <ProductList>상품가격 : {data?.fetchProduct.price}</ProductList>
+        </WrapperProduct>
       ) : (
-        <div>loading...</div>
+        <WrapperProduct>loading...</WrapperProduct>
       )}
     </>
   );

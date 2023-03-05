@@ -1,3 +1,8 @@
+import styled from "@emotion/styled";
+
+const InputProduct = styled.input``;
+const Button = styled.button``;
+
 export default function ProductWritePageUI({
   onChangeDetail,
   onChangeName,
@@ -7,15 +12,15 @@ export default function ProductWritePageUI({
 }) {
   return (
     <>
-      판매자 : <input type="text" onChange={onChangeSeller} />
+      판매자 : <InputProduct type="text" onChange={onChangeSeller} />
       <br />
-      상품명 : <input type="text" onChange={onChangeName} />
+      상품명 : <InputProduct type="text" onChange={onChangeName} />
       <br />
-      상품내용 : <input type="text" onChange={onChangeDetail} />
+      상품내용 : <InputProduct type="text" onChange={onChangeDetail} />
       <br />
-      상품가격 : <input type="text" onChange={onChangePrice} />
+      상품가격 : <InputProduct type="text" onChange={onChangePrice} />
       <br />
-      <button onClick={onClickSubmit}>상품등록</button>
+      <Button onClick={onClickSubmit}>상품등록</Button>
     </>
   );
 }
