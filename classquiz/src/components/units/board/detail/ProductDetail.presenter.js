@@ -4,7 +4,7 @@ const SetProduct = styled.div``;
 const WrapperProduct = styled.div``;
 const ProductList = styled.div``;
 
-export default function ProductDetailPageUI({ productId, data }) {
+export default function ProductDetailPageUI({ productId, data, onClickEditPage }) {
   return (
     <>
       <SetProduct>{productId}번 상품으로 등록이 완료되었습니다.</SetProduct>
@@ -18,6 +18,7 @@ export default function ProductDetailPageUI({ productId, data }) {
       ) : (
         <WrapperProduct>loading...</WrapperProduct>
       )}
+      <button onClick={onClickEditPage}>수정하기</button>
     </>
   );
 }

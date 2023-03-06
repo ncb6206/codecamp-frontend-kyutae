@@ -1,23 +1,25 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
-import { CREATE_BOARD } from "./BoardWrite.queries";
+import { CREATE_BOARD, UPDATE_BOARD } from "./BoardWrite.queries";
 import BoardWriteUI from "./BoardWrite.presenter";
 
-export default function BoardWrite() {
+export default function BoardWrite(props) {
   const router = useRouter();
+  const [isActive, setIsActive] = useState(false);
 
   const [writer, setWriter] = useState("");
   const [password, setPassword] = useState("");
   const [title, setTitle] = useState("");
   const [contents, setContents] = useState("");
-  const [isTrue, setIsTrue] = useState(false);
+
   const [writerError, setWriterError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [titleError, setTitleError] = useState("");
   const [contentsError, setContentsError] = useState("");
 
   const [createBoard] = useMutation(CREATE_BOARD);
+  const [updateBoard] = useMutation(UPDATE_BOARD);
 
   const onChangeWriter = (event) => {
     setWriter(event.target.value);
@@ -25,9 +27,9 @@ export default function BoardWrite() {
       setWriterError("");
     }
     if (event.target.value && password && title && contents) {
-      setIsTrue(true);
+      setIsActive(true);
     } else {
-      setIsTrue(false);
+      setIsActive(false);
     }
   };
 
@@ -37,9 +39,9 @@ export default function BoardWrite() {
       setPasswordError("");
     }
     if (writer && event.target.value && title && contents) {
-      setIsTrue(true);
+      setIsActive(true);
     } else {
-      setIsTrue(false);
+      setIsActive(false);
     }
   };
 
@@ -49,9 +51,9 @@ export default function BoardWrite() {
       setTitleError("");
     }
     if (writer && password && event.target.value && contents) {
-      setIsTrue(true);
+      setIsActive(true);
     } else {
-      setIsTrue(false);
+      setIsActive(false);
     }
   };
 
@@ -61,9 +63,9 @@ export default function BoardWrite() {
       setContentsError("");
     }
     if (writer && password && title && event.target.value) {
-      setIsTrue(true);
+      setIsActive(true);
     } else {
-      setIsTrue(false);
+      setIsActive(false);
     }
   };
 
@@ -104,6 +106,27 @@ export default function BoardWrite() {
     }
   };
 
+  const onClickEdit = async () => {
+    const myUpdateBoardInput = {};
+    if (title) myUpdateBoardInput.title = title;
+    if (contents) myUpdateBoardInput.contents = contents;
+
+    try {
+      const result = await updateBoard({
+        variables: {
+          boardId: router.query.boardId,
+          password: password,
+          updateBoardInput: myUpdateBoardInput,
+        },
+      });
+      console.log(result);
+      alert("게시글이 수정되었씁니다!!");
+      router.push(`/boards/${result.data.updateBoard._id}`);
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
   return (
     <BoardWriteUI
       writerError={writerError}
@@ -115,7 +138,10 @@ export default function BoardWrite() {
       onChangeTitle={onChangeTitle}
       onChangeContents={onChangeContents}
       onClickSubmit={onClickSubmit}
-      isTrue={isTrue}
+      onClickEdit={onClickEdit}
+      isActive={isActive}
+      isEdit={props.isEdit}
+      data={props.data}
     />
   );
 }

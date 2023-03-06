@@ -28,5 +28,9 @@ export default function BoardDetail() {
     }
   };
 
-  return <BoardDetailUI data={data} onClickDelete={onClickDelete} />;
+  const onClickEdit = async () => {
+    router.push(`/boards/${router.query.boardId}/edit`);
+  };
+
+  return <BoardDetailUI data={data} onClickDelete={onClickDelete} onClickEdit={onClickEdit} />;
 }

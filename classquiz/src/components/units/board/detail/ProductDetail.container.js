@@ -13,6 +13,15 @@ export default function ProductDetailPage() {
   });
 
   console.log(data);
+  const onClickEditPage = () => {
+    router.push(`/08/products/${router.query.id}/edit`);
+  };
 
-  return <ProductDetailPageUI productId={router.query.id} data={data} />;
+  return (
+    <ProductDetailPageUI
+      productId={router.query.id}
+      data={data}
+      onClickEditPage={onClickEditPage}
+    />
+  );
 }

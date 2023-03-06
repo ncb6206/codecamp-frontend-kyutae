@@ -1,7 +1,7 @@
 import { getMyDate } from "@/src/commons/libraries/util";
 import * as S from "./BoardDetail.styles";
 
-export default function BoardDetailUI({ data, onClickDelete }) {
+export default function BoardDetailUI({ data, onClickDelete, onClickEdit }) {
   return (
     <S.Wrapper>
       <S.CardWrapper>
@@ -21,7 +21,7 @@ export default function BoardDetailUI({ data, onClickDelete }) {
       </S.CardWrapper>
       <S.BottomWrapper>
         <S.Button>목록으로</S.Button>
-        <S.Button>수정하기</S.Button>
+        <S.Button onClick={onClickEdit}>수정하기</S.Button>
         <S.Button onClick={onClickDelete}>삭제하기</S.Button>
       </S.BottomWrapper>
     </S.Wrapper>

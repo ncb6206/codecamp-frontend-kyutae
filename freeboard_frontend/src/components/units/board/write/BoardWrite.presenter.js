@@ -6,11 +6,14 @@ export default function BoardWriteUI({
   onChangeTitle,
   onChangeWriter,
   onClickSubmit,
+  onClickEdit,
   writerError,
   passwordError,
   titleError,
   contentsError,
-  isTrue,
+  isActive,
+  isEdit,
+  data,
 }) {
   return (
     <S.Wrapper>
@@ -18,7 +21,12 @@ export default function BoardWriteUI({
       <S.WriterWrapper>
         <S.InputWrapper>
           <S.Label>작성자</S.Label>
-          <S.Writer type="text" placeholder="이름을 적어주세요" onChange={onChangeWriter} />
+          <S.Writer
+            type="text"
+            placeholder="이름을 적어주세요"
+            onChange={onChangeWriter}
+            defaultValue={data?.fetchBoard.writer}
+          />
           <S.ErrorMessage>{writerError}</S.ErrorMessage>
         </S.InputWrapper>
         <S.InputWrapper>
@@ -33,12 +41,22 @@ export default function BoardWriteUI({
       </S.WriterWrapper>
       <S.InputWrapper>
         <S.Label>제목</S.Label>
-        <S.Subject type="text" placeholder="제목을 작성해주세요." onChange={onChangeTitle} />
+        <S.Subject
+          type="text"
+          placeholder="제목을 작성해주세요."
+          onChange={onChangeTitle}
+          defaultValue={data?.fetchBoard.title}
+        />
         <S.ErrorMessage>{titleError}</S.ErrorMessage>
       </S.InputWrapper>
       <S.InputWrapper>
         <S.Label>내용</S.Label>
-        <S.Contents type="text" placeholder="내용을 작성해주세요." onChange={onChangeContents} />
+        <S.Contents
+          type="text"
+          placeholder="내용을 작성해주세요."
+          onChange={onChangeContents}
+          defaultValue={data?.fetchBoard.contents}
+        />
         <S.ErrorMessage>{contentsError}</S.ErrorMessage>
       </S.InputWrapper>
       <S.InputWrapper>
@@ -71,8 +89,11 @@ export default function BoardWriteUI({
         <S.RadioLabel for="picture">사진</S.RadioLabel>
       </S.OptionWrapper>
       <S.ButtonWrapper>
-        <S.SubmitButton onClick={onClickSubmit} isTrue={isTrue}>
-          등록하기
+        <S.SubmitButton
+          onClick={isEdit ? onClickEdit : onClickSubmit}
+          isActive={isEdit ? true : isActive}
+        >
+          {isEdit ? "수정하기" : "등록하기"}
         </S.SubmitButton>
       </S.ButtonWrapper>
     </S.Wrapper>
