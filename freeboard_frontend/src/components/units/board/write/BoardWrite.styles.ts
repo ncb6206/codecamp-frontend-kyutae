@@ -51,9 +51,6 @@ export const Label = styled.div`
   padding-bottom: 16px;
   font-size: 16px;
   font-weight: 500;
-  /* color: ${(props) => {
-    return props.qqq;
-  }} */
 `;
 
 export const Subject = styled.input`
@@ -84,6 +81,7 @@ export const Contents = styled.textarea`
   padding: 14px;
   padding-left: 16px;
   border: 1px solid #bdbdbd;
+  resize: none;
 `;
 
 export const ZipCodeWrapper = styled.div`

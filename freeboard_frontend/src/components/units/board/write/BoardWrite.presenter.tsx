@@ -1,20 +1,6 @@
 import * as S from "./BoardWrite.styles";
 
-export default function BoardWriteUI({
-  onChangeContents,
-  onChangePassword,
-  onChangeTitle,
-  onChangeWriter,
-  onClickSubmit,
-  onClickEdit,
-  writerError,
-  passwordError,
-  titleError,
-  contentsError,
-  isActive,
-  isEdit,
-  data,
-}) {
+export default function BoardWriteUI(props) {
   return (
     <S.Wrapper>
       <S.Title>게시물 등록</S.Title>
@@ -24,19 +10,19 @@ export default function BoardWriteUI({
           <S.Writer
             type="text"
             placeholder="이름을 적어주세요"
-            onChange={onChangeWriter}
-            defaultValue={data?.fetchBoard.writer}
+            onChange={props.onChangeWriter}
+            defaultValue={props.data?.fetchBoard.writer}
           />
-          <S.ErrorMessage>{writerError}</S.ErrorMessage>
+          <S.ErrorMessage>{props.writerError}</S.ErrorMessage>
         </S.InputWrapper>
         <S.InputWrapper>
           <S.Label>비밀번호</S.Label>
           <S.Password
             type="password"
             placeholder="비밀번호를 입력해주세요"
-            onChange={onChangePassword}
+            onChange={props.onChangePassword}
           />
-          <S.ErrorMessage>{passwordError}</S.ErrorMessage>
+          <S.ErrorMessage>{props.passwordError}</S.ErrorMessage>
         </S.InputWrapper>
       </S.WriterWrapper>
       <S.InputWrapper>
@@ -44,20 +30,19 @@ export default function BoardWriteUI({
         <S.Subject
           type="text"
           placeholder="제목을 작성해주세요."
-          onChange={onChangeTitle}
-          defaultValue={data?.fetchBoard.title}
+          onChange={props.onChangeTitle}
+          defaultValue={props.data?.fetchBoard.title}
         />
-        <S.ErrorMessage>{titleError}</S.ErrorMessage>
+        <S.ErrorMessage>{props.titleError}</S.ErrorMessage>
       </S.InputWrapper>
       <S.InputWrapper>
         <S.Label>내용</S.Label>
         <S.Contents
-          type="text"
           placeholder="내용을 작성해주세요."
-          onChange={onChangeContents}
-          defaultValue={data?.fetchBoard.contents}
+          onChange={props.onChangeContents}
+          defaultValue={props.data?.fetchBoard.contents}
         />
-        <S.ErrorMessage>{contentsError}</S.ErrorMessage>
+        <S.ErrorMessage>{props.contentsError}</S.ErrorMessage>
       </S.InputWrapper>
       <S.InputWrapper>
         <S.Label>주소</S.Label>
@@ -90,10 +75,10 @@ export default function BoardWriteUI({
       </S.OptionWrapper>
       <S.ButtonWrapper>
         <S.SubmitButton
-          onClick={isEdit ? onClickEdit : onClickSubmit}
-          isActive={isEdit ? true : isActive}
+          onClick={props.isEdit ? props.onClickEdit : props.onClickSubmit}
+          isActive={props.isEdit ? true : props.isActive}
         >
-          {isEdit ? "수정하기" : "등록하기"}
+          {props.isEdit ? "수정하기" : "등록하기"}
         </S.SubmitButton>
       </S.ButtonWrapper>
     </S.Wrapper>

@@ -10,7 +10,7 @@ export default function BoardDetail() {
 
   const { data } = useQuery(FETCH_BOARD, {
     variables: {
-      boardId: router.query.boardId,
+      boardId: String(router.query.boardId),
     },
   });
 
@@ -18,7 +18,7 @@ export default function BoardDetail() {
     try {
       await deleteBoard({
         variables: {
-          boardId: router.query.boardId,
+          boardId: String(router.query.boardId),
         },
       });
       alert("삭제되었씁니다!");

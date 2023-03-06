@@ -5,7 +5,7 @@ export const Wrapper = styled.div`
     box-sizing: border-box;
   }
   width: 60rem;
-  margin: 100px;
+  margin: 100px 100px 40px 100px;
   display: flex;
   flex-direction: column;
   align-items: center;

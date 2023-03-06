@@ -1,4 +1,4 @@
-import { getMyDate } from "@/src/commons/libraries/util";
+import { getMyDate } from "../../../../commons/libraries/util";
 import * as S from "./BoardDetail.styles";
 
 export default function BoardDetailUI({ data, onClickDelete, onClickEdit }) {
