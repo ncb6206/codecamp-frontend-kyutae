@@ -1,6 +1,7 @@
 import * as S from "./BoardWrite.styles";
+import { IBoardWriteUIProps } from "./BoardWrite.types";
 
-export default function BoardWriteUI(props) {
+export default function BoardWriteUI(props: IBoardWriteUIProps) {
   return (
     <S.Wrapper>
       <S.Title>게시물 등록</S.Title>
@@ -11,7 +12,7 @@ export default function BoardWriteUI(props) {
             type="text"
             placeholder="이름을 적어주세요"
             onChange={props.onChangeWriter}
-            defaultValue={props.data?.fetchBoard.writer}
+            defaultValue={String(props.data?.fetchBoard?.writer)}
           />
           <S.ErrorMessage>{props.writerError}</S.ErrorMessage>
         </S.InputWrapper>
@@ -40,7 +41,7 @@ export default function BoardWriteUI(props) {
         <S.Contents
           placeholder="내용을 작성해주세요."
           onChange={props.onChangeContents}
-          defaultValue={props.data?.fetchBoard.contents}
+          defaultValue={String(props.data?.fetchBoard?.contents)}
         />
         <S.ErrorMessage>{props.contentsError}</S.ErrorMessage>
       </S.InputWrapper>
@@ -69,9 +70,9 @@ export default function BoardWriteUI(props) {
       <S.OptionWrapper>
         <S.Label>메인 설정</S.Label>
         <S.RadioButton type="radio" name="main" value="youtube" id="youtube" checked />
-        <S.RadioLabel for="youtube">유튜브</S.RadioLabel>
+        <S.RadioLabel htmlFor="youtube">유튜브</S.RadioLabel>
         <S.RadioButton type="radio" name="main" value="picture" id="picture" />
-        <S.RadioLabel for="picture">사진</S.RadioLabel>
+        <S.RadioLabel htmlFor="picture">사진</S.RadioLabel>
       </S.OptionWrapper>
       <S.ButtonWrapper>
         <S.SubmitButton

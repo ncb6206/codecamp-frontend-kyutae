@@ -1,4 +1,5 @@
 import { ChangeEvent } from "react";
+import { IQuery } from "../../../../commons/types/generated/types";
 
 export interface IBoardWriteProps {
   isEdit: boolean;
@@ -14,13 +15,13 @@ export interface IMyVariables {
 
 export interface IBoardWriteUIProps {
   onClickSubmit: () => void;
+  onClickUpdate: () => void;
   onChangeWriter: (event: ChangeEvent<HTMLInputElement>) => void;
   onChangeTitle: (event: ChangeEvent<HTMLInputElement>) => void;
   onChangeContents: (event: ChangeEvent<HTMLInputElement>) => void;
-  onClickUpdate: () => void;
   mycolor: boolean;
   isEdit: boolean;
-  data: Pick<IQuery, "fetchBoard">;
+  data?: Pick<IQuery, "fetchBoard">;
 }
 
 export interface IBlueButtonProps {

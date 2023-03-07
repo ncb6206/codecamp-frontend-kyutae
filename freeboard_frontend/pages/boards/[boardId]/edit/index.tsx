@@ -1,4 +1,4 @@
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 import BoardWrite from "../../../../src/components/units/board/write/BoardWrite.container";
 import { FETCH_BOARD } from "../../../../src/components/units/board/detail/BoardDetail.queries";

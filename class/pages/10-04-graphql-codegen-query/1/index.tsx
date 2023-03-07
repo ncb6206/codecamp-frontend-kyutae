@@ -1,4 +1,5 @@
 import { useQuery, gql } from "@apollo/client";
+import { IQuery, IQueryFetchBoardArgs } from "../../../src/commons/types/generated/types";
 
 const FETCH_BOARD = gql`
   query fetchBoard($number: Int) {

@@ -2,15 +2,23 @@ import { useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { getMyDate } from "../../../../commons/libraries/util";
+import {
+  IMutation,
+  IMutationDeleteBoardCommentArgs,
+} from "../../../../commons/types/generated/types";
 import * as S from "../list/BoardCommentList.styles";
 import BoardCommentWrite from "../write/BoardCommentWrite.container";
 import { DELETE_BOARD_COMMENT, FETCH_BOARD_COMMENTS } from "./BoardCommentList.queries";
+import { IBoardCommentListUIItemProps } from "./BoardCommentList.types";
 
-export default function BoardCommentListUIItem(props) {
+export default function BoardCommentListUIItem(props: IBoardCommentListUIItemProps) {
   const router = useRouter();
   const [isEdit, setIsEdit] = useState(false);
 
-  const [deleteBoardComment] = useMutation(DELETE_BOARD_COMMENT);
+  const [deleteBoardComment] = useMutation<
+    Pick<IMutation, "deleteBoardComment">,
+    IMutationDeleteBoardCommentArgs
+  >(DELETE_BOARD_COMMENT);
 
   const onClickUpdate = () => {
     setIsEdit(true);
@@ -27,11 +35,11 @@ export default function BoardCommentListUIItem(props) {
         refetchQueries: [
           {
             query: FETCH_BOARD_COMMENTS,
-            variables: { boardId: router.query.boardId },
+            variables: { boardId: String(router.query.boardId) },
           },
         ],
       });
-    } catch (error) {
+    } catch (error: any) {
       alert(error.message);
     }
   };

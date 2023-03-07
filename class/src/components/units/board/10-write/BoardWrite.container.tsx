@@ -1,6 +1,11 @@
 import { useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
 import { ChangeEvent, useState } from "react";
+import {
+  IMutation,
+  IMutationCreateBoardArgs,
+  IMutationUpdateBoardArgs,
+} from "../../../../commons/types/generated/types";
 import BoardWriteUI from "./BoardWrite.presenter";
 import { CREATE_BOARD, UPDATE_BOARD } from "./BoardWrite.queries";
 import { IBoardWriteProps, IMyVariables } from "./BoardWrite.types";
@@ -12,8 +17,12 @@ export default function BoardWrite(props: IBoardWriteProps) {
   const [writer, setWriter] = useState("");
   const [title, setTitle] = useState("");
   const [contents, setContents] = useState("");
-  const [createBoard] = useMutation(CREATE_BOARD);
-  const [updateBoard] = useMutation(UPDATE_BOARD);
+  const [createBoard] = useMutation<Pick<IMutation, "createBoard">, IMutationCreateBoardArgs>(
+    CREATE_BOARD
+  );
+  const [updateBoard] = useMutation<Pick<IMutation, "updateBoard">, IMutationUpdateBoardArgs>(
+    UPDATE_BOARD
+  );
 
   const onClickSubmit = async () => {
     const result = await createBoard({
@@ -24,8 +33,8 @@ export default function BoardWrite(props: IBoardWriteProps) {
       },
     });
     console.log(result);
-    alert(result.data.createBoard.message);
-    router.push(`/10-01-typescript-boards/${result.data.createBoard.number}`);
+    alert(result.data?.createBoard?.message);
+    router.push(`/10-01-typescript-boards/${result.data?.createBoard?.number}`);
   };
 
   const onClickUpdate = async () => {
@@ -42,8 +51,8 @@ export default function BoardWrite(props: IBoardWriteProps) {
     });
     // 2. 상세페이지로 이동하기
     console.log(result);
-    alert(result.data.updateBoard.message);
-    router.push(`/10-01-typescript-boards/${result.data.updateBoard.number}`);
+    alert(result.data?.updateBoard?.message);
+    router.push(`/10-01-typescript-boards/${result.data?.updateBoard?.number}`);
   };
 
   const onChangeWriter = (event: ChangeEvent<HTMLInputElement>) => {
@@ -71,10 +80,10 @@ export default function BoardWrite(props: IBoardWriteProps) {
   return (
     <BoardWriteUI
       onClickSubmit={onClickSubmit}
+      onClickUpdate={onClickUpdate}
       onChangeWriter={onChangeWriter}
       onChangeTitle={onChangeTitle}
       onChangeContents={onChangeContents}
-      onClickUpdate={onClickUpdate}
       mycolor={mycolor}
       isEdit={props.isEdit}
       data={props.data}
