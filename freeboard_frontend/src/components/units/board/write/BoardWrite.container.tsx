@@ -110,8 +110,8 @@ export default function BoardWrite(props: IBoardWriteProps) {
         console.log(result);
         alert("게시글이 등록되었씁니다!!");
         router.push(`/boards/${result.data?.createBoard?._id}`);
-      } catch (error: any) {
-        alert(error.message);
+      } catch (error) {
+        if (error instanceof Error) alert(error.message);
       }
     }
   };

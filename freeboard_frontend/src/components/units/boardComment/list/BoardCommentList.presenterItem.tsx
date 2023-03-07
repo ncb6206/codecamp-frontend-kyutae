@@ -44,6 +44,10 @@ export default function BoardCommentListUIItem(props: IBoardCommentListUIItemPro
     }
   };
 
+  const onClickWriter = () => {
+    alert(`${props.el?.writer}님이 작성한 글입니다.`);
+  };
+
   return (
     <>
       {!isEdit && (
@@ -52,7 +56,7 @@ export default function BoardCommentListUIItem(props: IBoardCommentListUIItemPro
             <S.Avatar src="/images/avatar.png" />
             <S.MainWrapper>
               <S.WriterWrapper>
-                <S.Writer>{props.el?.writer}</S.Writer>
+                <S.Writer onClick={onClickWriter}>{props.el?.writer}</S.Writer>
               </S.WriterWrapper>
               <S.Contents>{props.el?.contents}</S.Contents>
             </S.MainWrapper>

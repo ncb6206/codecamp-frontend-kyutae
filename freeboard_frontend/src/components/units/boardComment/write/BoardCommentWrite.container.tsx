@@ -63,8 +63,11 @@ export default function BoardCommentWrite(props: IBoardWriteProps) {
         });
         console.log(result);
         alert("댓글이 등록되었습니다!");
-      } catch (error: any) {
-        alert(error.message);
+        setWriter("");
+        setPassword("");
+        setContents("");
+      } catch (error) {
+        if (error instanceof Error) alert(error.message);
       }
     }
   };
@@ -92,8 +95,11 @@ export default function BoardCommentWrite(props: IBoardWriteProps) {
       });
       alert("댓글이 수정되었습니다!");
       props.setIsEdit?.(false);
-    } catch (error: any) {
-      alert(error.message);
+      setWriter("");
+      setPassword("");
+      setContents("");
+    } catch (error) {
+      if (error instanceof Error) alert(error.message);
     }
   };
 

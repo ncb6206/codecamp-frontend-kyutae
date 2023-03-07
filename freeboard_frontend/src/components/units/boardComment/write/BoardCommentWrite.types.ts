@@ -2,8 +2,8 @@ import { ChangeEvent, Dispatch, SetStateAction } from "react";
 import { IBoardComment } from "../../../../commons/types/generated/types";
 
 export interface IBoardWriteProps {
-  isEdit: boolean;
-  setIsEdit: Dispatch<SetStateAction<boolean>>;
+  isEdit?: boolean;
+  setIsEdit?: Dispatch<SetStateAction<boolean>>;
   el?: IBoardComment;
 }
 
@@ -14,7 +14,7 @@ export interface IBoardCommentWriteUIProps {
   onClickSubmit: () => void;
   onClickUpdate: () => void;
   contents: string;
-  isEdit: boolean;
+  isEdit?: boolean;
   el?: IBoardComment;
 }
 

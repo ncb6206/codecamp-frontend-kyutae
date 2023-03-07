@@ -29,7 +29,6 @@ export interface IBoardWriteUIProps {
 export interface ImyUpdateBoardInput {
   title?: string;
   contents?: string;
-  youtubeUrl?: string;
 }
 
 export interface IUpdateBoard {

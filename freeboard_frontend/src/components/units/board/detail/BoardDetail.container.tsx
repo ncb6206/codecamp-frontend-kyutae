@@ -31,14 +31,25 @@ export default function BoardDetail() {
       });
       alert("삭제되었씁니다!");
       router.push(`/boards`);
-    } catch (error: any) {
-      console.log(error.message);
+    } catch (error) {
+      if (error instanceof Error) console.log(error.message);
     }
   };
 
-  const onClickEdit = async () => {
+  const onClickMoveToBoardList = () => {
+    router.push("/boards");
+  };
+
+  const onClickEdit = () => {
     router.push(`/boards/${router.query.boardId}/edit`);
   };
 
-  return <BoardDetailUI data={data} onClickDelete={onClickDelete} onClickEdit={onClickEdit} />;
+  return (
+    <BoardDetailUI
+      data={data}
+      onClickMoveToBoardList={onClickMoveToBoardList}
+      onClickDelete={onClickDelete}
+      onClickEdit={onClickEdit}
+    />
+  );
 }
