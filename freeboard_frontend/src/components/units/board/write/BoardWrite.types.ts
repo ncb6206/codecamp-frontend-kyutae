@@ -19,6 +19,7 @@ export interface IBoardWriteUIProps {
   onChangePassword: (event: ChangeEvent<HTMLInputElement>) => void;
   onChangeTitle: (event: ChangeEvent<HTMLInputElement>) => void;
   onChangeContents: (event: ChangeEvent<HTMLTextAreaElement>) => void;
+  onChangeYoutubeUrl: (event: ChangeEvent<HTMLInputElement>) => void;
   onClickSubmit: () => void;
   onClickEdit: () => void;
   isActive: boolean;
@@ -29,6 +30,7 @@ export interface IBoardWriteUIProps {
 export interface ImyUpdateBoardInput {
   title?: string;
   contents?: string;
+  youtubeUrl?: string;
 }
 
 export interface IUpdateBoard {

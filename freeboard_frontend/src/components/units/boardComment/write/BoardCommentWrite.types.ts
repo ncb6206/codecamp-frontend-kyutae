@@ -11,6 +11,7 @@ export interface IBoardCommentWriteUIProps {
   onChangeWriter: (event: ChangeEvent<HTMLInputElement>) => void;
   onChangePassword: (event: ChangeEvent<HTMLInputElement>) => void;
   onChangeContents: (event: ChangeEvent<HTMLTextAreaElement>) => void;
+  onChangeRating: (value: number) => void;
   onClickSubmit: () => void;
   onClickUpdate: () => void;
   contents: string;

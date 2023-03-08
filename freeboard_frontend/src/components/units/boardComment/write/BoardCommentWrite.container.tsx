@@ -18,7 +18,7 @@ export default function BoardCommentWrite(props: IBoardWriteProps) {
   const [writer, setWriter] = useState("");
   const [password, setPassword] = useState("");
   const [contents, setContents] = useState("");
-  const [rating, setRating] = useState(3);
+  const [rating, setRating] = useState(0);
 
   const [createBoardComment] = useMutation<
     Pick<IMutation, "createBoardComment">,
@@ -41,8 +41,11 @@ export default function BoardCommentWrite(props: IBoardWriteProps) {
     setContents(event.target.value);
   };
 
+  const onChangeRating = (value: number) => {
+    setRating(value);
+  };
+
   const onClickSubmit = async () => {
-    setRating(3);
     if (writer && password && contents && rating) {
       try {
         const result = await createBoardComment({
@@ -67,9 +70,12 @@ export default function BoardCommentWrite(props: IBoardWriteProps) {
         setWriter("");
         setPassword("");
         setContents("");
+        setRating(0);
       } catch (error) {
         if (error instanceof Error) alert(error.message);
       }
+    } else {
+      alert("전체 다 입력해주세요!");
     }
   };
 
@@ -99,6 +105,7 @@ export default function BoardCommentWrite(props: IBoardWriteProps) {
       setWriter("");
       setPassword("");
       setContents("");
+      setRating(0);
     } catch (error) {
       if (error instanceof Error) alert(error.message);
     }
@@ -109,6 +116,7 @@ export default function BoardCommentWrite(props: IBoardWriteProps) {
       onChangeWriter={onChangeWriter}
       onChangePassword={onChangePassword}
       onChangeContents={onChangeContents}
+      onChangeRating={onChangeRating}
       onClickSubmit={onClickSubmit}
       onClickUpdate={onClickUpdate}
       contents={contents}

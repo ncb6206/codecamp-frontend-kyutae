@@ -14,6 +14,7 @@ export const UPDATE_BOARD = gql`
       _id
       writer
       title
+      youtubeUrl
       contents
       createdAt
     }

@@ -73,11 +73,17 @@ export const Contents = styled.div`
   padding-bottom: 120px;
 `;
 
+export const YoutubeWrapper = styled.div`
+  width: 800px;
+  height: 600px;
+`;
+
 export const BottomWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
   padding: 3rem;
+  user-select: none;
 `;
 
 export const Button = styled.button`
@@ -90,4 +96,38 @@ export const Button = styled.button`
     background-color: gold;
     border-color: white;
   }
+`;
+
+export const Footer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 2.5rem;
+  user-select: none;
+`;
+
+export const LikeWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  color: #ffd600;
+  font-size: 1.2rem;
+  cursor: pointer;
+`;
+
+export const LikeCount = styled.div`
+  padding-top: 0.5rem;
+  text-align: center;
+`;
+
+export const DislikeWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  color: #828282;
+  font-size: 1.2rem;
+  cursor: pointer;
+`;
+
+export const DislikeCount = styled.div`
+  padding-top: 0.5rem;
+  text-align: center;
 `;

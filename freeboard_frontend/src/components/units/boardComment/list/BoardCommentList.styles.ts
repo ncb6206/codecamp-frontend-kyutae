@@ -32,11 +32,21 @@ export const MainWrapper = styled.div`
 `;
 
 export const WriterWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
   text-align: left;
 `;
 
+export const RatingWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+`;
+
 export const Writer = styled.div`
-  padding-bottom: 0.3rem;
+  padding-right: 1rem;
+  font-size: 1.3rem;
 `;
 
 export const Contents = styled.div`

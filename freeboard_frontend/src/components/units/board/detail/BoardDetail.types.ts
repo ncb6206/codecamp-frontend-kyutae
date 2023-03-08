@@ -5,4 +5,6 @@ export interface IBoardDetailUIProps {
   onClickDelete: () => void;
   onClickEdit: () => void;
   onClickMoveToBoardList: () => void;
+  onClickLike: () => void;
+  onClickDislike: () => void;
 }

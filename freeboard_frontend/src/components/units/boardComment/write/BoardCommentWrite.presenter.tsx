@@ -1,3 +1,4 @@
+import { Rate } from "antd";
 import * as S from "../write/BoardCommentWrite.styles";
 import type { IBoardCommentWriteUIProps } from "./BoardCommentWrite.types";
 
@@ -16,6 +17,7 @@ export default function BoardCommentWriteUI(props: IBoardCommentWriteUIProps) {
           onChange={props.onChangeWriter}
         />
         <S.Input type="password" placeholder="비밀번호" onChange={props.onChangePassword} />
+        <Rate onChange={props.onChangeRating} defaultValue={props.el?.rating} />
       </S.InputWrapper>
       <S.ContentsWrapper>
         <S.Contents

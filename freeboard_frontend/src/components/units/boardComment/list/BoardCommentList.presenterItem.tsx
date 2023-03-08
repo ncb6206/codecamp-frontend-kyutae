@@ -1,4 +1,5 @@
 import { useMutation } from "@apollo/client";
+import Rate from "antd/lib/rate";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { getMyDate } from "../../../../commons/libraries/util";
@@ -57,8 +58,11 @@ export default function BoardCommentListUIItem(props: IBoardCommentListUIItemPro
             <S.MainWrapper>
               <S.WriterWrapper>
                 <S.Writer onClick={onClickWriter}>{props.el?.writer}</S.Writer>
+                <S.RatingWrapper>
+                  <Rate disabled value={props.el?.rating} />
+                </S.RatingWrapper>
               </S.WriterWrapper>
-              <S.Contents>{props.el?.contents}</S.Contents>
+              <S.Contents onClick={onClickWriter}>{props.el?.contents}</S.Contents>
             </S.MainWrapper>
             <S.OptionWrapper>
               <S.UpdateIcon
@@ -71,7 +75,7 @@ export default function BoardCommentListUIItem(props: IBoardCommentListUIItemPro
               />
             </S.OptionWrapper>
           </S.FlexWrapper>
-          <S.DateString>{getMyDate(props.el?.createdAt)}</S.DateString>
+          <S.DateString onClick={onClickWriter}>{getMyDate(props.el?.createdAt)}</S.DateString>
         </S.ItemWrapper>
       )}
       {isEdit && <BoardCommentWrite isEdit={true} setIsEdit={setIsEdit} el={props.el} />}
