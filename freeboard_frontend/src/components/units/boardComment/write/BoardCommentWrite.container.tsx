@@ -1,12 +1,12 @@
-import { ChangeEvent } from "react";
+import type { ChangeEvent } from "react";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { useMutation } from "@apollo/client";
 import BoardCommentWriteUI from "./BoardCommentWrite.presenter";
 import { CREATE_BOARD_COMMENT, UPDATE_BOARD_COMMENT } from "./BoardCommentWrite.queries";
 import { FETCH_BOARD_COMMENTS } from "../list/BoardCommentList.queries";
-import { IBoardWriteProps, ImyUpdateBoardCommentInputProps } from "./BoardCommentWrite.types";
-import {
+import type { IBoardWriteProps, ImyUpdateBoardCommentInputProps } from "./BoardCommentWrite.types";
+import type {
   IMutation,
   IMutationCreateBoardCommentArgs,
   IMutationUpdateBoardCommentArgs,
@@ -42,6 +42,7 @@ export default function BoardCommentWrite(props: IBoardWriteProps) {
   };
 
   const onClickSubmit = async () => {
+    setRating(3);
     if (writer && password && contents && rating) {
       try {
         const result = await createBoardComment({
@@ -82,7 +83,7 @@ export default function BoardCommentWrite(props: IBoardWriteProps) {
     try {
       await updateBoardComment({
         variables: {
-          password: password,
+          password,
           boardCommentId: String(props.el?._id),
           updateBoardCommentInput: myUpdateBoardCommentInput,
         },

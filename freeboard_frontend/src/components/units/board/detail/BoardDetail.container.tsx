@@ -2,7 +2,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 import { FETCH_BOARD, DELETE_BOARD } from "./BoardDetail.queries";
 import BoardDetailUI from "./BoardDetail.presenter";
-import {
+import type {
   IMutation,
   IMutationDeleteBoardArgs,
   IQuery,
@@ -30,18 +30,18 @@ export default function BoardDetail() {
         },
       });
       alert("삭제되었씁니다!");
-      router.push(`/boards`);
+      await router.push(`/boards`);
     } catch (error) {
       if (error instanceof Error) console.log(error.message);
     }
   };
 
-  const onClickMoveToBoardList = () => {
-    router.push("/boards");
+  const onClickMoveToBoardList = async () => {
+    await router.push("/boards");
   };
 
-  const onClickEdit = () => {
-    router.push(`/boards/${router.query.boardId}/edit`);
+  const onClickEdit = async () => {
+    await router.push(`/boards/${String(router.query.boardId)}/edit`);
   };
 
   return (

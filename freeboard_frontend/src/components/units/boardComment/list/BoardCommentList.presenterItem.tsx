@@ -2,14 +2,14 @@ import { useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { getMyDate } from "../../../../commons/libraries/util";
-import {
+import type {
   IMutation,
   IMutationDeleteBoardCommentArgs,
 } from "../../../../commons/types/generated/types";
 import * as S from "../list/BoardCommentList.styles";
 import BoardCommentWrite from "../write/BoardCommentWrite.container";
 import { DELETE_BOARD_COMMENT, FETCH_BOARD_COMMENTS } from "./BoardCommentList.queries";
-import { IBoardCommentListUIItemProps } from "./BoardCommentList.types";
+import type { IBoardCommentListUIItemProps } from "./BoardCommentList.types";
 
 export default function BoardCommentListUIItem(props: IBoardCommentListUIItemProps) {
   const router = useRouter();
@@ -45,7 +45,7 @@ export default function BoardCommentListUIItem(props: IBoardCommentListUIItemPro
   };
 
   const onClickWriter = () => {
-    alert(`${props.el?.writer}님이 작성한 글입니다.`);
+    alert(`${String(props.el?.writer)}님이 작성한 글입니다.`);
   };
 
   return (

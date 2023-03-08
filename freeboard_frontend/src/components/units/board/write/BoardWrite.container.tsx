@@ -1,14 +1,15 @@
 import { useRouter } from "next/router";
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
+import type { ChangeEvent } from "react";
 import { useMutation } from "@apollo/client";
 import { CREATE_BOARD, UPDATE_BOARD } from "./BoardWrite.queries";
 import BoardWriteUI from "./BoardWrite.presenter";
-import {
+import type {
   IMutation,
   IMutationCreateBoardArgs,
   IMutationUpdateBoardArgs,
 } from "../../../../commons/types/generated/types";
-import { IBoardWriteProps, ImyUpdateBoardInput, IUpdateBoard } from "./BoardWrite.types";
+import type { IBoardWriteProps, ImyUpdateBoardInput } from "./BoardWrite.types";
 
 export default function BoardWrite(props: IBoardWriteProps) {
   const router = useRouter();
@@ -109,7 +110,7 @@ export default function BoardWrite(props: IBoardWriteProps) {
         });
         console.log(result);
         alert("게시글이 등록되었씁니다!!");
-        router.push(`/boards/${result.data?.createBoard?._id}`);
+        await router.push(`/boards/${String(result.data?.createBoard?._id)}`);
       } catch (error) {
         if (error instanceof Error) alert(error.message);
       }
@@ -125,13 +126,13 @@ export default function BoardWrite(props: IBoardWriteProps) {
       const result = await updateBoard({
         variables: {
           boardId: String(router.query.boardId),
-          password: password,
+          password,
           updateBoardInput: myUpdateBoardInput,
         },
       });
       console.log(result);
       alert("게시글이 수정되었씁니다!!");
-      router.push(`/boards/${result.data?.updateBoard?._id}`);
+      await router.push(`/boards/${String(result.data?.updateBoard?._id)}`);
     } catch (error: any) {
       alert(error.message);
     }
