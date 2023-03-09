@@ -4,7 +4,17 @@ import type { IBoardWriteUIProps } from "./BoardWrite.types";
 export default function BoardWriteUI(props: IBoardWriteUIProps) {
   return (
     <S.Wrapper>
-      <S.Title>게시물 등록</S.Title>
+      {props.isOpen && (
+        <S.AddressModal
+          title="주소 설정"
+          open={true}
+          onOk={props.onToggleModal}
+          onCancel={props.onToggleModal}
+        >
+          <S.ZipcodeInput onComplete={props.onCompleteAddressSearch} />
+        </S.AddressModal>
+      )}
+      <S.Title>{props.isEdit ? "게시글 수정" : "게시글 등록"}</S.Title>
       <S.WriterWrapper>
         <S.InputWrapper>
           <S.Label>작성자</S.Label>
@@ -12,9 +22,8 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
             type="text"
             placeholder="이름을 적어주세요"
             onChange={props.onChangeWriter}
-            defaultValue={
-              props.data?.fetchBoard.writer ? String(props.data?.fetchBoard.writer) : ""
-            }
+            defaultValue={props.data?.fetchBoard.writer || ""}
+            readOnly={!!props.data?.fetchBoard.writer}
           />
           <S.ErrorMessage>{props.writerError}</S.ErrorMessage>
         </S.InputWrapper>
@@ -50,12 +59,22 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
       <S.InputWrapper>
         <S.Label>주소</S.Label>
         <S.ZipCodeWrapper>
-          <S.Zipcode placeholder="07250" />
-          <S.SearchButton>우편번호 검색</S.SearchButton>
+          <S.Zipcode
+            readOnly
+            value={props.zipcode || props.data?.fetchBoard?.boardAddress?.zipcode || ""}
+            placeholder="07250"
+          />
+          <S.SearchButton onClick={props.onToggleModal}>우편번호 검색</S.SearchButton>
         </S.ZipCodeWrapper>
-        <S.Address />
+        <S.Address
+          readOnly
+          value={props.address || props.data?.fetchBoard.boardAddress?.address || ""}
+        />
         <S.ErrorMessage></S.ErrorMessage>
-        <S.Address />
+        <S.Address
+          onChange={props.onChangeAddressDetail}
+          defaultValue={props.data?.fetchBoard.boardAddress?.addressDetail || ""}
+        />
         <S.ErrorMessage></S.ErrorMessage>
       </S.InputWrapper>
       <S.InputWrapper>
@@ -63,9 +82,7 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
         <S.Youtube
           onChange={props.onChangeYoutubeUrl}
           placeholder="링크를 복사해주세요."
-          defaultValue={
-            props.data?.fetchBoard?.youtubeUrl ? String(props.data?.fetchBoard?.youtubeUrl) : ""
-          }
+          defaultValue={props.data?.fetchBoard?.youtubeUrl || ""}
         />
         <S.ErrorMessage></S.ErrorMessage>
       </S.InputWrapper>

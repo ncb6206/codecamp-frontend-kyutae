@@ -1,11 +1,10 @@
-import { LikeOutlined } from "@ant-design/icons";
-import { DislikeOutlined } from "@ant-design/icons/lib/icons";
 import { getMyDate } from "../../../../commons/libraries/util";
 import * as S from "./BoardDetail.styles";
 import type { IBoardDetailUIProps } from "./BoardDetail.types";
 import YouTube, { YouTubeProps } from "react-youtube";
 
 export default function BoardDetailUI(props: IBoardDetailUIProps) {
+  console.log(props.data?.fetchBoard);
   const opts: YouTubeProps["opts"] = {
     width: "800",
     height: "600",
@@ -25,6 +24,12 @@ export default function BoardDetailUI(props: IBoardDetailUIProps) {
               <S.Writer>{props.data?.fetchBoard?.writer}</S.Writer>
               <S.CreatedAt>{getMyDate(props.data?.fetchBoard?.createdAt)}</S.CreatedAt>
             </S.Info>
+            <S.Address>
+              <S.AddressName>{props.data?.fetchBoard?.boardAddress?.address}</S.AddressName>
+              <S.AddressDetail>
+                {props.data?.fetchBoard?.boardAddress?.addressDetail}
+              </S.AddressDetail>
+            </S.Address>
           </S.AvatarWrapper>
         </S.Header>
         <S.Body>
@@ -38,11 +43,11 @@ export default function BoardDetailUI(props: IBoardDetailUIProps) {
         </S.Body>
         <S.Footer>
           <S.LikeWrapper onClick={props.onClickLike}>
-            <LikeOutlined />
+            <S.LikeOutlinedIcon />
             <S.LikeCount>{props.data?.fetchBoard?.likeCount}</S.LikeCount>
           </S.LikeWrapper>
           <S.DislikeWrapper onClick={props.onClickDislike}>
-            <DislikeOutlined style={{ transform: "scaleX(-1)" }} />
+            <S.DislikeOutlinedIcon />
             <S.DislikeCount>{props.data?.fetchBoard?.dislikeCount}</S.DislikeCount>
           </S.DislikeWrapper>
         </S.Footer>

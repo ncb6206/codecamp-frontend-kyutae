@@ -1,4 +1,6 @@
 import styled from "@emotion/styled";
+import Modal from "antd/lib/modal/Modal";
+import DaumPostcodeEmbed from "react-daum-postcode";
 import type { ISubmitButtonProps } from "./BoardWrite.types";
 
 export const Wrapper = styled.div`
@@ -176,3 +178,7 @@ export const ErrorMessage = styled.div`
   line-height: 24px;
   color: red;
 `;
+
+export const AddressModal = styled(Modal)``;
+
+export const ZipcodeInput = styled(DaumPostcodeEmbed)``;

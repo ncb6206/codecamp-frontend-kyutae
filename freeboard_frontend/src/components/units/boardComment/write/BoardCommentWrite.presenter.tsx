@@ -1,4 +1,3 @@
-import { Rate } from "antd";
 import * as S from "../write/BoardCommentWrite.styles";
 import type { IBoardCommentWriteUIProps } from "./BoardCommentWrite.types";
 
@@ -11,20 +10,26 @@ export default function BoardCommentWriteUI(props: IBoardCommentWriteUIProps) {
       </S.TitleWrapper>
       <S.InputWrapper>
         <S.Input
-          defaultValue={props.el?.writer ? String(props.el?.writer) : ""}
+          value={props.writer || props.el?.writer || ""}
           type="text"
           placeholder="작성자"
           onChange={props.onChangeWriter}
         />
-        <S.Input type="password" placeholder="비밀번호" onChange={props.onChangePassword} />
-        <Rate onChange={props.onChangeRating} defaultValue={props.el?.rating} />
+        <S.Input
+          type="password"
+          placeholder="비밀번호"
+          onChange={props.onChangePassword}
+          value={props.password || ""}
+        />
+        <S.RateIcon onChange={props.onChangeRating} value={props.rating || props.el?.rating || 0} />
       </S.InputWrapper>
       <S.ContentsWrapper>
         <S.Contents
           maxLength={100}
           placeholder="개인정보를 공유 및 요청하거나, 명예 훼손, 무단 광고, 불법 정보 유포시 모니터링 후 삭제될 수 있으며, 이에 대한 민형사상 책임은 게시자에게 있습니다."
           onChange={props.onChangeContents}
-          defaultValue={props.el?.contents ? String(props.el?.contents) : ""}
+          // defaultValue={props.el?.contents || ""}
+          value={props.contents || props.el?.contents || ""}
         />
         <S.BottomWrapper>
           <S.ContentsLength>

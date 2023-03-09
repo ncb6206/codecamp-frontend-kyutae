@@ -1,5 +1,6 @@
+import type { ChangeEvent } from "react";
 import { useMutation } from "@apollo/client";
-import Rate from "antd/lib/rate";
+import { Modal } from "antd";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { getMyDate } from "../../../../commons/libraries/util";
@@ -15,6 +16,8 @@ import type { IBoardCommentListUIItemProps } from "./BoardCommentList.types";
 export default function BoardCommentListUIItem(props: IBoardCommentListUIItemProps) {
   const router = useRouter();
   const [isEdit, setIsEdit] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [password, setPassword] = useState("");
 
   const [deleteBoardComment] = useMutation<
     Pick<IMutation, "deleteBoardComment">,
@@ -25,12 +28,19 @@ export default function BoardCommentListUIItem(props: IBoardCommentListUIItemPro
     setIsEdit(true);
   };
 
+  const onToggleModal = () => {
+    setIsOpen((prev) => !prev);
+  };
+
+  const onInputPassword = (event: ChangeEvent<HTMLInputElement>) => {
+    setPassword(event.target.value);
+  };
+
   const onClickDelete = async () => {
-    const myPassword = prompt("비밀번호를 입력하세요.");
     try {
       await deleteBoardComment({
         variables: {
-          password: myPassword,
+          password,
           boardCommentId: String(props.el?._id),
         },
         refetchQueries: [
@@ -59,7 +69,7 @@ export default function BoardCommentListUIItem(props: IBoardCommentListUIItemPro
               <S.WriterWrapper>
                 <S.Writer onClick={onClickWriter}>{props.el?.writer}</S.Writer>
                 <S.RatingWrapper>
-                  <Rate disabled value={props.el?.rating} />
+                  <S.RateIcon disabled value={props.el?.rating} />
                 </S.RatingWrapper>
               </S.WriterWrapper>
               <S.Contents onClick={onClickWriter}>{props.el?.contents}</S.Contents>
@@ -71,7 +81,7 @@ export default function BoardCommentListUIItem(props: IBoardCommentListUIItemPro
               />
               <S.DeleteIcon
                 src="/images/boardComment/list/option_delete_icon.png"
-                onClick={onClickDelete}
+                onClick={onToggleModal}
               />
             </S.OptionWrapper>
           </S.FlexWrapper>
@@ -79,6 +89,16 @@ export default function BoardCommentListUIItem(props: IBoardCommentListUIItemPro
         </S.ItemWrapper>
       )}
       {isEdit && <BoardCommentWrite isEdit={true} setIsEdit={setIsEdit} el={props.el} />}
+      {isOpen && (
+        <Modal
+          title="비밀번호를 입력해주세요"
+          open={true}
+          onOk={onClickDelete}
+          onCancel={onToggleModal}
+        >
+          <input onChange={onInputPassword} />
+        </Modal>
+      )}
     </>
   );
 }

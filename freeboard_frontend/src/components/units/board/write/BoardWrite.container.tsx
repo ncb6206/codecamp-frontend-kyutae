@@ -9,17 +9,22 @@ import type {
   IMutationCreateBoardArgs,
   IMutationUpdateBoardArgs,
 } from "../../../../commons/types/generated/types";
-import type { IBoardWriteProps, ImyUpdateBoardInput } from "./BoardWrite.types";
+import type { BoardAddress, IBoardWriteProps, ImyUpdateBoardInput } from "./BoardWrite.types";
+import { Address } from "react-daum-postcode/lib/loadPostcode";
 
 export default function BoardWrite(props: IBoardWriteProps) {
   const router = useRouter();
   const [isActive, setIsActive] = useState(false);
+  const [isOpen, SetIsOpen] = useState(false);
 
   const [writer, setWriter] = useState("");
   const [password, setPassword] = useState("");
   const [title, setTitle] = useState("");
   const [contents, setContents] = useState("");
   const [youtubeUrl, setYoutubeUrl] = useState("");
+  const [zipcode, setZipcode] = useState("");
+  const [address, setAddress] = useState("");
+  const [addressDetail, setAddressDetail] = useState("");
 
   const [writerError, setWriterError] = useState("");
   const [passwordError, setPasswordError] = useState("");
@@ -85,6 +90,20 @@ export default function BoardWrite(props: IBoardWriteProps) {
     setYoutubeUrl(event.target.value);
   };
 
+  const onChangeAddressDetail = (event: ChangeEvent<HTMLInputElement>) => {
+    setAddressDetail(event.target.value);
+  };
+
+  const onToggleModal = () => {
+    SetIsOpen((prev) => !prev);
+  };
+
+  const onCompleteAddressSearch = (address: Address) => {
+    setAddress(address.address);
+    setZipcode(address.zonecode);
+    SetIsOpen((prev) => !prev);
+  };
+
   const onClickSubmit = async () => {
     if (!writer) {
       setWriterError("작성자를 입력해주세요!");
@@ -111,12 +130,21 @@ export default function BoardWrite(props: IBoardWriteProps) {
               title,
               contents,
               youtubeUrl,
+              boardAddress: {
+                zipcode,
+                address,
+                addressDetail,
+              },
             },
           },
         });
+        if (typeof result.data?.createBoard?._id !== "string") {
+          alert("일시적인 오류가 있습니다. 다시 시도해 주세요.");
+          return;
+        }
         console.log(result);
         alert("게시글이 등록되었습니다!!");
-        await router.push(`/boards/${String(result.data?.createBoard?._id)}`);
+        void router.push(`/boards/${result.data?.createBoard?._id}`);
       } catch (error) {
         if (error instanceof Error) alert(error.message);
       }
@@ -124,10 +152,16 @@ export default function BoardWrite(props: IBoardWriteProps) {
   };
 
   const onClickEdit = async () => {
+    const boardAddress: BoardAddress = {};
+    if (zipcode) boardAddress.zipcode = zipcode;
+    if (address) boardAddress.address = address;
+    if (addressDetail) boardAddress.addressDetail = addressDetail;
+
     const myUpdateBoardInput: ImyUpdateBoardInput = {};
     if (title) myUpdateBoardInput.title = title;
     if (contents) myUpdateBoardInput.contents = contents;
     if (youtubeUrl) myUpdateBoardInput.youtubeUrl = youtubeUrl;
+    if (boardAddress) myUpdateBoardInput.boardAddress = boardAddress;
 
     try {
       const result = await updateBoard({
@@ -137,9 +171,13 @@ export default function BoardWrite(props: IBoardWriteProps) {
           updateBoardInput: myUpdateBoardInput,
         },
       });
+      if (typeof result.data?.updateBoard?._id !== "string") {
+        alert("일시적인 오류가 있습니다. 다시 시도해 주세요.");
+        return;
+      }
       console.log(result);
-      alert("게시글이 수정되었씁니다!!");
-      await router.push(`/boards/${String(result.data?.updateBoard?._id)}`);
+      alert("게시글이 수정되었습니다!!");
+      void router.push(`/boards/${result.data?.updateBoard?._id}`);
     } catch (error: any) {
       alert(error.message);
     }
@@ -156,9 +194,16 @@ export default function BoardWrite(props: IBoardWriteProps) {
       onChangeTitle={onChangeTitle}
       onChangeContents={onChangeContents}
       onChangeYoutubeUrl={onChangeYoutubeUrl}
+      onToggleModal={onToggleModal}
+      onCompleteAddressSearch={onCompleteAddressSearch}
+      onChangeAddressDetail={onChangeAddressDetail}
       onClickSubmit={onClickSubmit}
       onClickEdit={onClickEdit}
       isActive={isActive}
+      isOpen={isOpen}
+      zipcode={zipcode}
+      address={address}
+      addressDetail={addressDetail}
       isEdit={props.isEdit}
       data={props.data}
     />

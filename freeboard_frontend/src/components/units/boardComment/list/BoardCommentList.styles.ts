@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import Rate from "antd/lib/rate";
 
 export const ItemWrapper = styled.div`
   * {
@@ -72,3 +73,5 @@ export const DateString = styled.div`
   color: #bdbdbd;
   padding: 1rem 0 0 4.2rem;
 `;
+
+export const RateIcon = styled(Rate)``;

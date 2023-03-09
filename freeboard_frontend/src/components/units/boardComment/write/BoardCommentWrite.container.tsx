@@ -14,7 +14,6 @@ import type {
 
 export default function BoardCommentWrite(props: IBoardWriteProps) {
   const router = useRouter();
-
   const [writer, setWriter] = useState("");
   const [password, setPassword] = useState("");
   const [contents, setContents] = useState("");
@@ -119,7 +118,10 @@ export default function BoardCommentWrite(props: IBoardWriteProps) {
       onChangeRating={onChangeRating}
       onClickSubmit={onClickSubmit}
       onClickUpdate={onClickUpdate}
+      writer={writer}
+      password={password}
       contents={contents}
+      rating={rating}
       isEdit={props.isEdit}
       el={props.el}
     />

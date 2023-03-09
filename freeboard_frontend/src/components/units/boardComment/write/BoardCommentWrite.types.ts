@@ -14,7 +14,10 @@ export interface IBoardCommentWriteUIProps {
   onChangeRating: (value: number) => void;
   onClickSubmit: () => void;
   onClickUpdate: () => void;
+  writer: string;
+  password: string;
   contents: string;
+  rating: number;
   isEdit?: boolean;
   el?: IBoardComment;
 }

@@ -1,3 +1,4 @@
+import { DislikeOutlined, LikeOutlined } from "@ant-design/icons";
 import styled from "@emotion/styled";
 
 export const Wrapper = styled.div`
@@ -29,6 +30,7 @@ export const Header = styled.div`
 `;
 
 export const AvatarWrapper = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: row;
 `;
@@ -42,6 +44,7 @@ export const Avatar = styled.img`
 export const Info = styled.div`
   display: flex;
   flex-direction: column;
+  width: 60%;
 `;
 
 export const Writer = styled.div`
@@ -54,6 +57,15 @@ export const CreatedAt = styled.div`
   line-height: 24px;
   color: #828282;
 `;
+
+export const Address = styled.div`
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+`;
+
+export const AddressName = styled.div``;
+export const AddressDetail = styled.div``;
 
 export const Body = styled.div`
   padding: 3rem 0;
@@ -130,4 +142,10 @@ export const DislikeWrapper = styled.div`
 export const DislikeCount = styled.div`
   padding-top: 0.5rem;
   text-align: center;
+`;
+
+export const LikeOutlinedIcon = styled(LikeOutlined)``;
+
+export const DislikeOutlinedIcon = styled(DislikeOutlined)`
+  transform: scaleX(-1);
 `;
