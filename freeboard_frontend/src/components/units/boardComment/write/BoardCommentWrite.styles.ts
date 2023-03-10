@@ -2,9 +2,6 @@ import styled from "@emotion/styled";
 import { Rate } from "antd";
 
 export const Wrapper = styled.div`
-  * {
-    box-sizing: border-box;
-  }
   width: 60rem;
   margin: 0 6rem;
   padding: 2rem 0;

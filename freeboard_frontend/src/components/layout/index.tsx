@@ -1,26 +1,27 @@
 import { useRouter } from "next/router";
-import LayoutBanner from "./banner";
-import LayoutFooter from "./footer";
-import LayoutHeader from "./header";
-import LayoutNavigation from "./navigation";
-
-const HIDDEN_HEADERS = ["/12-02-library-star"];
+import LayoutBanner from "./banner/LayoutBanner.container";
+import LayoutHeader from "./header/LayoutHeader.container";
+import LayoutNavigation from "./navigation/LayoutNavigation.container";
+import styled from "@emotion/styled";
 
 interface ILayoutProps {
   children: JSX.Element;
 }
 
-export default function Layout(props: ILayoutProps) {
-  const router = useRouter();
+const Body = styled.div`
+  height: 30rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
-  const isHiddenHeader = HIDDEN_HEADERS.includes(router.asPath);
+export default function Layout(props: ILayoutProps) {
   return (
     <>
-      {!isHiddenHeader && <LayoutHeader />}
+      <LayoutHeader />
       <LayoutBanner />
       <LayoutNavigation />
-      <div style={{ height: "500px", display: "flex" }}>{props.children}</div>
-      <LayoutFooter />
+      <Body>{props.children}</Body>
     </>
   );
 }

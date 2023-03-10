@@ -4,9 +4,6 @@ import DaumPostcodeEmbed from "react-daum-postcode";
 import type { ISubmitButtonProps } from "./BoardWrite.types";
 
 export const Wrapper = styled.div`
-  * {
-    box-sizing: border-box;
-  }
   width: 1200px;
   margin: 100px;
   padding: 80px 102px 100px;

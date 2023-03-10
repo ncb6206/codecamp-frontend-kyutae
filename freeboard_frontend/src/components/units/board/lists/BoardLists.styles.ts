@@ -1,9 +1,6 @@
 import styled from "@emotion/styled";
 
 export const Wrapper = styled.div`
-  * {
-    box-sizing: border-box;
-  }
   display: flex;
   flex-direction: column;
   width: 1200px;
@@ -62,7 +59,7 @@ export const PencilIcon = styled.img`
 export const Footer = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: flex-between;
+  justify-content: flex-end;
   padding-top: 3rem;
 `;
 

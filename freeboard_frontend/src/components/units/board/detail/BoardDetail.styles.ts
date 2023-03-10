@@ -2,9 +2,6 @@ import { DislikeOutlined, LikeOutlined } from "@ant-design/icons";
 import styled from "@emotion/styled";
 
 export const Wrapper = styled.div`
-  * {
-    box-sizing: border-box;
-  }
   width: 60rem;
   margin: 100px 100px 40px 100px;
   display: flex;
