@@ -59,8 +59,10 @@ export const PencilIcon = styled.img`
 export const Footer = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: center;
   justify-content: flex-end;
   padding-top: 3rem;
+  user-select: none;
 `;
 
 export const Button = styled.button`
@@ -71,6 +73,7 @@ export const Button = styled.button`
   border-radius: 10px;
   background-color: #ffffff;
   cursor: pointer;
+  margin-left: 15rem;
 
   :hover {
     background-color: #f5f2fc;
