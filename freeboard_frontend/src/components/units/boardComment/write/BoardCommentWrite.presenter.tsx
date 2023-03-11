@@ -10,10 +10,10 @@ export default function BoardCommentWriteUI(props: IBoardCommentWriteUIProps) {
       </S.TitleWrapper>
       <S.InputWrapper>
         <S.Input
-          value={props.writer || props.el?.writer || ""}
           type="text"
           placeholder="작성자"
           onChange={props.onChangeWriter}
+          value={props.writer || props.el?.writer || ""}
         />
         <S.Input
           type="password"

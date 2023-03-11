@@ -2,6 +2,7 @@ import type { IBoardComment, IQuery } from "../../../../commons/types/generated/
 
 export interface IBoardCommentListUIProps {
   data?: Pick<IQuery, "fetchBoardComments">;
+  onLoadMore: () => void;
 }
 
 export interface IBoardCommentListUIItemProps {
