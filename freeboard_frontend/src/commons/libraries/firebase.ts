@@ -1,11 +1,3 @@
-// import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
-import { AppProps } from "next/app";
-import "antd/dist/antd.css";
-import Layout from "../src/components/commons/layout";
-import ApolloSetting from "../src/components/commons/apollo";
-import { globalStyles } from "../src/commons/styles/globalStyles";
-import { Global } from "@emotion/react";
-
 // ////////////////// 파이어베이스 ///////////////////////
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
@@ -24,16 +16,3 @@ const firebaseConfig = {
 
 // Initialize Firebase
 export const firebaseApp = initializeApp(firebaseConfig);
-
-export default function App({ Component, pageProps }: AppProps) {
-  return (
-    <ApolloSetting>
-      <>
-        <Global styles={globalStyles} />
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </>
-    </ApolloSetting>
-  );
-}

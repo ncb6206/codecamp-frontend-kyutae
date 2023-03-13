@@ -61,6 +61,16 @@ export default function BoardCommentListUIItem(props: IBoardCommentListUIItemPro
 
   return (
     <>
+      {isOpen && (
+        <Modal
+          title="비밀번호를 입력해주세요"
+          open={true}
+          onOk={onClickDelete}
+          onCancel={onToggleModal}
+        >
+          <input onChange={onInputPassword} />
+        </Modal>
+      )}
       {!isEdit && (
         <S.ItemWrapper>
           <S.FlexWrapper>
@@ -89,16 +99,6 @@ export default function BoardCommentListUIItem(props: IBoardCommentListUIItemPro
         </S.ItemWrapper>
       )}
       {isEdit && <BoardCommentWrite isEdit={true} setIsEdit={setIsEdit} el={props.el} />}
-      {isOpen && (
-        <Modal
-          title="비밀번호를 입력해주세요"
-          open={true}
-          onOk={onClickDelete}
-          onCancel={onToggleModal}
-        >
-          <input onChange={onInputPassword} />
-        </Modal>
-      )}
     </>
   );
 }

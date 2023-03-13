@@ -83,7 +83,7 @@ export default function BoardCommentWrite(props: IBoardWriteProps) {
 
     const myUpdateBoardCommentInput: ImyUpdateBoardCommentInputProps = {};
     if (contents) myUpdateBoardCommentInput.contents = contents;
-    if (rating) myUpdateBoardCommentInput.rating = rating;
+    if (rating !== props.el?.rating) myUpdateBoardCommentInput.rating = rating;
 
     try {
       await updateBoardComment({

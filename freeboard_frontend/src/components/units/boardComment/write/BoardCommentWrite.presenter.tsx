@@ -4,10 +4,12 @@ import type { IBoardCommentWriteUIProps } from "./BoardCommentWrite.types";
 export default function BoardCommentWriteUI(props: IBoardCommentWriteUIProps) {
   return (
     <S.Wrapper>
-      <S.TitleWrapper>
-        <S.PencilIcon src="/images/boardComment/write/pencil.png" />
-        <span>댓글</span>
-      </S.TitleWrapper>
+      {!props.isEdit && (
+        <S.TitleWrapper>
+          <S.PencilIcon src="/images/boardComment/write/pencil.png" />
+          <span>댓글</span>
+        </S.TitleWrapper>
+      )}
       <S.InputWrapper>
         <S.Input
           type="text"

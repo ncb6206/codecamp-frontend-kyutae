@@ -3,6 +3,7 @@ import * as S from "./LayoutNavigation.styles";
 import { LayoutNavigationUIProps } from "./LayoutNavigation.types";
 
 const SelectMenu = [
+  { name: "나의파이어베이스", page: "/myfirebase" },
   { name: "라이브강아지", page: "/openapis" },
   { name: "자유게시판", page: "/boards" },
   { name: "중고마켓", page: "/markets" },
