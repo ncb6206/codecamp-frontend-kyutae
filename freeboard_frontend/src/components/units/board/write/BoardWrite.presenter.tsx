@@ -90,19 +90,34 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
         <S.Label>사진 첨부</S.Label>
         <S.UploadButton onClick={props.onClickImage}>+</S.UploadButton>
         <S.UploadFile type="file" ref={props.fileRef} onChange={props.onChangeFile} />
-        {!!props.imageUrl && (
+        {(!!props.imageUrl && (
           <S.UploadImage src={`https://storage.googleapis.com/${props.imageUrl}`} />
-        )}
+        )) ||
+          (props.data?.fetchBoard?.images && (
+            <S.UploadImage
+              src={`https://storage.googleapis.com/${props.data?.fetchBoard?.images}`}
+            />
+          ))}
         <S.UploadButton onClick={props.onClickImage}>+</S.UploadButton>
         <S.UploadFile type="file" ref={props.fileRef} onChange={props.onChangeFile} />
-        {!!props.imageUrl && (
+        {(!!props.imageUrl && (
           <S.UploadImage src={`https://storage.googleapis.com/${props.imageUrl}`} />
-        )}
+        )) ||
+          (props.data?.fetchBoard?.images && (
+            <S.UploadImage
+              src={`https://storage.googleapis.com/${props.data?.fetchBoard?.images}`}
+            />
+          ))}
         <S.UploadButton onClick={props.onClickImage}>+</S.UploadButton>
         <S.UploadFile type="file" ref={props.fileRef} onChange={props.onChangeFile} />
-        {!!props.imageUrl && (
+        {(!!props.imageUrl && (
           <S.UploadImage src={`https://storage.googleapis.com/${props.imageUrl}`} />
-        )}
+        )) ||
+          (props.data?.fetchBoard?.images && (
+            <S.UploadImage
+              src={`https://storage.googleapis.com/${props.data?.fetchBoard?.images}`}
+            />
+          ))}
       </S.ImageWrapper>
       <S.OptionWrapper>
         <S.Label>메인 설정</S.Label>
