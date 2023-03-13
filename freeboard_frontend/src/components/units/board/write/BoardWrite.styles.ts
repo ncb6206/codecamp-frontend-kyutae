@@ -135,6 +135,14 @@ export const UploadButton = styled.button`
   cursor: pointer;
 `;
 
+export const UploadFile = styled.input`
+  display: none;
+`;
+
+export const UploadImage = styled.img`
+  width: 2rem;
+`;
+
 export const OptionWrapper = styled.div`
   width: 100%;
   padding-top: 40px;

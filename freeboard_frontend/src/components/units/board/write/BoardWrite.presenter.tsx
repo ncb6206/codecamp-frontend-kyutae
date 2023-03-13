@@ -88,9 +88,21 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
       </S.InputWrapper>
       <S.ImageWrapper>
         <S.Label>사진 첨부</S.Label>
-        <S.UploadButton>+</S.UploadButton>
-        <S.UploadButton>+</S.UploadButton>
-        <S.UploadButton>+</S.UploadButton>
+        <S.UploadButton onClick={props.onClickImage}>+</S.UploadButton>
+        <S.UploadFile type="file" ref={props.fileRef} onChange={props.onChangeFile} />
+        {!!props.imageUrl && (
+          <S.UploadImage src={`https://storage.googleapis.com/${props.imageUrl}`} />
+        )}
+        <S.UploadButton onClick={props.onClickImage}>+</S.UploadButton>
+        <S.UploadFile type="file" ref={props.fileRef} onChange={props.onChangeFile} />
+        {!!props.imageUrl && (
+          <S.UploadImage src={`https://storage.googleapis.com/${props.imageUrl}`} />
+        )}
+        <S.UploadButton onClick={props.onClickImage}>+</S.UploadButton>
+        <S.UploadFile type="file" ref={props.fileRef} onChange={props.onChangeFile} />
+        {!!props.imageUrl && (
+          <S.UploadImage src={`https://storage.googleapis.com/${props.imageUrl}`} />
+        )}
       </S.ImageWrapper>
       <S.OptionWrapper>
         <S.Label>메인 설정</S.Label>

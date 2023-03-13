@@ -40,6 +40,10 @@ export default function BoardDetailUI(props: IBoardDetailUIProps) {
               <YouTube videoId={String(props.data?.fetchBoard?.youtubeUrl)} opts={opts} />
             )}
           </S.YoutubeWrapper>
+          {!!props.data?.fetchBoard?.images &&
+            props.data?.fetchBoard?.images.map((el) => (
+              <S.BoardImage src={`https://storage.googleapis.com/${el}`} />
+            ))}
         </S.Body>
         <S.Footer>
           <S.LikeWrapper onClick={props.onClickLike}>

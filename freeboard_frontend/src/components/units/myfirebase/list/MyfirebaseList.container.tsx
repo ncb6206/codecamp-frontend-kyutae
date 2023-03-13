@@ -10,9 +10,13 @@ export default function MyfirebaseList() {
 
   useEffect(() => {
     const fetchBoards = async () => {
+      // firebase store의 board 컬렉션을 가지고 오는 부분
       const board = collection(getFirestore(firebaseApp), "board");
+      // 게시글 가지고 오기
       const result = await getDocs(board);
+      // 받아온 게시글 하나씩 뽑아오기
       const datas = result.docs.map((el) => el.data());
+      // DataBoards의 state 바꿔주기
       setData(datas);
     };
 

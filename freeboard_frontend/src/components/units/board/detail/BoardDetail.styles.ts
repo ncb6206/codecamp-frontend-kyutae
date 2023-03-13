@@ -141,6 +141,10 @@ export const DislikeCount = styled.div`
   text-align: center;
 `;
 
+export const BoardImage = styled.img`
+  width: 5rem;
+`;
+
 export const LikeOutlinedIcon = styled(LikeOutlined)``;
 
 export const DislikeOutlinedIcon = styled(DislikeOutlined)`

@@ -1,16 +1,19 @@
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import type { ChangeEvent } from "react";
 import { useMutation } from "@apollo/client";
-import { CREATE_BOARD, UPDATE_BOARD } from "./BoardWrite.queries";
+import { CREATE_BOARD, UPDATE_BOARD, UPLOAD_FILE } from "./BoardWrite.queries";
 import BoardWriteUI from "./BoardWrite.presenter";
 import type {
   IMutation,
   IMutationCreateBoardArgs,
   IMutationUpdateBoardArgs,
+  IMutationUploadFileArgs,
 } from "../../../../commons/types/generated/types";
 import type { BoardAddress, IBoardWriteProps, ImyUpdateBoardInput } from "./BoardWrite.types";
 import { Address } from "react-daum-postcode/lib/loadPostcode";
+import { Modal } from "antd";
+import { checkValidationFile } from "../../../../commons/libraries/validationFile";
 
 export default function BoardWrite(props: IBoardWriteProps) {
   const router = useRouter();
@@ -25,17 +28,23 @@ export default function BoardWrite(props: IBoardWriteProps) {
   const [zipcode, setZipcode] = useState("");
   const [address, setAddress] = useState("");
   const [addressDetail, setAddressDetail] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
 
   const [writerError, setWriterError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [titleError, setTitleError] = useState("");
   const [contentsError, setContentsError] = useState("");
 
+  const fileRef = useRef<HTMLInputElement>(null);
+
   const [createBoard] = useMutation<Pick<IMutation, "createBoard">, IMutationCreateBoardArgs>(
     CREATE_BOARD
   );
   const [updateBoard] = useMutation<Pick<IMutation, "updateBoard">, IMutationUpdateBoardArgs>(
     UPDATE_BOARD
+  );
+  const [uploadFile] = useMutation<Pick<IMutation, "uploadFile">, IMutationUploadFileArgs>(
+    UPLOAD_FILE
   );
 
   const onChangeWriter = (event: ChangeEvent<HTMLInputElement>) => {
@@ -104,6 +113,26 @@ export default function BoardWrite(props: IBoardWriteProps) {
     SetIsOpen((prev) => !prev);
   };
 
+  const onChangeFile = async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    console.log(file);
+
+    const isValid = checkValidationFile(file);
+    if (!isValid) return;
+
+    try {
+      const result = await uploadFile({ variables: { file } });
+      console.log(result.data?.uploadFile.url);
+      setImageUrl(result.data?.uploadFile.url || "");
+    } catch (error) {
+      if (error instanceof Error) Modal.error({ content: error.message });
+    }
+  };
+
+  const onClickImage = () => {
+    fileRef.current?.click();
+  };
+
   const onClickSubmit = async () => {
     if (!writer) {
       setWriterError("작성자를 입력해주세요!");
@@ -135,18 +164,21 @@ export default function BoardWrite(props: IBoardWriteProps) {
                 address,
                 addressDetail,
               },
+              images: [imageUrl],
             },
           },
         });
+
         if (typeof result.data?.createBoard?._id !== "string") {
-          alert("일시적인 오류가 있습니다. 다시 시도해 주세요.");
+          Modal.error({ content: "일시적인 오류가 있습니다. 다시 시도해 주세요." });
           return;
         }
+
         console.log(result);
-        alert("게시글이 등록되었습니다!!");
+        Modal.success({ content: "게시글이 등록되었습니다!!" });
         void router.push(`/boards/${result.data?.createBoard?._id}`);
       } catch (error) {
-        if (error instanceof Error) alert(error.message);
+        if (error instanceof Error) Modal.error({ content: error.message });
       }
     }
   };
@@ -162,6 +194,7 @@ export default function BoardWrite(props: IBoardWriteProps) {
     if (contents) myUpdateBoardInput.contents = contents;
     if (youtubeUrl) myUpdateBoardInput.youtubeUrl = youtubeUrl;
     if (boardAddress) myUpdateBoardInput.boardAddress = boardAddress;
+    if (imageUrl) myUpdateBoardInput.images = [imageUrl];
 
     try {
       const result = await updateBoard({
@@ -172,14 +205,14 @@ export default function BoardWrite(props: IBoardWriteProps) {
         },
       });
       if (typeof result.data?.updateBoard?._id !== "string") {
-        alert("일시적인 오류가 있습니다. 다시 시도해 주세요.");
+        Modal.error({ content: "일시적인 오류가 있습니다. 다시 시도해 주세요." });
         return;
       }
       console.log(result);
-      alert("게시글이 수정되었습니다!!");
+      Modal.success({ content: "게시글이 수정되었습니다!!" });
       void router.push(`/boards/${result.data?.updateBoard?._id}`);
     } catch (error: any) {
-      alert(error.message);
+      Modal.error({ content: error.message });
     }
   };
 
@@ -194,11 +227,13 @@ export default function BoardWrite(props: IBoardWriteProps) {
       onChangeTitle={onChangeTitle}
       onChangeContents={onChangeContents}
       onChangeYoutubeUrl={onChangeYoutubeUrl}
-      onToggleModal={onToggleModal}
-      onCompleteAddressSearch={onCompleteAddressSearch}
       onChangeAddressDetail={onChangeAddressDetail}
+      onChangeFile={onChangeFile}
+      onCompleteAddressSearch={onCompleteAddressSearch}
+      onToggleModal={onToggleModal}
       onClickSubmit={onClickSubmit}
       onClickEdit={onClickEdit}
+      onClickImage={onClickImage}
       isActive={isActive}
       isOpen={isOpen}
       zipcode={zipcode}
@@ -206,6 +241,8 @@ export default function BoardWrite(props: IBoardWriteProps) {
       addressDetail={addressDetail}
       isEdit={props.isEdit}
       data={props.data}
+      fileRef={fileRef}
+      imageUrl={imageUrl}
     />
   );
 }
