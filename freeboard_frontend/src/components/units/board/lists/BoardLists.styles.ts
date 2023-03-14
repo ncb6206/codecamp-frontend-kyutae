@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { IColumnTitleSpan } from "./BoardLists.types";
 
 export const Wrapper = styled.div`
   display: flex;
@@ -43,6 +44,10 @@ export const ColumnTitle = styled.div`
   }
 `;
 
+export const ColumnTitleSpan = styled.span`
+  color: ${(props: IColumnTitleSpan) => (props.isMatch ? "red" : "black")};
+`;
+
 export const ColumnBasic = styled.div`
   width: 10%;
   text-align: center;
@@ -60,7 +65,7 @@ export const Footer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   padding-top: 3rem;
   user-select: none;
 `;
