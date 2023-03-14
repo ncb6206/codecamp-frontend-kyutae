@@ -141,6 +141,11 @@ export const DislikeCount = styled.div`
   text-align: center;
 `;
 
+export const ImageWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
 export const BoardImage = styled.img`
   width: 5rem;
 `;

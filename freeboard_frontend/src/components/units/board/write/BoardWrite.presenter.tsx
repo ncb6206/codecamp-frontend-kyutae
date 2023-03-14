@@ -1,5 +1,7 @@
+import Upload01 from "../../../commons/uploads/01/Uploads01.container";
 import * as S from "./BoardWrite.styles";
 import type { IBoardWriteUIProps } from "./BoardWrite.types";
+import { v4 as uuidv4 } from "uuid";
 
 export default function BoardWriteUI(props: IBoardWriteUIProps) {
   return (
@@ -22,7 +24,7 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
             type="text"
             placeholder="이름을 적어주세요"
             onChange={props.onChangeWriter}
-            defaultValue={props.data?.fetchBoard.writer || ""}
+            defaultValue={props.data?.fetchBoard.writer ?? ""}
             readOnly={!!props.data?.fetchBoard.writer}
           />
           <S.ErrorMessage>{props.writerError}</S.ErrorMessage>
@@ -61,19 +63,19 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
         <S.ZipCodeWrapper>
           <S.Zipcode
             readOnly
-            value={props.zipcode || props.data?.fetchBoard?.boardAddress?.zipcode || ""}
+            value={props.zipcode ?? props.data?.fetchBoard?.boardAddress?.zipcode ?? ""}
             placeholder="07250"
           />
           <S.SearchButton onClick={props.onToggleModal}>우편번호 검색</S.SearchButton>
         </S.ZipCodeWrapper>
         <S.Address
           readOnly
-          value={props.address || props.data?.fetchBoard.boardAddress?.address || ""}
+          value={props.address ?? props.data?.fetchBoard.boardAddress?.address ?? ""}
         />
         <S.ErrorMessage></S.ErrorMessage>
         <S.Address
           onChange={props.onChangeAddressDetail}
-          defaultValue={props.data?.fetchBoard.boardAddress?.addressDetail || ""}
+          defaultValue={props.data?.fetchBoard.boardAddress?.addressDetail ?? ""}
         />
         <S.ErrorMessage></S.ErrorMessage>
       </S.InputWrapper>
@@ -82,42 +84,20 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
         <S.Youtube
           onChange={props.onChangeYoutubeUrl}
           placeholder="링크를 복사해주세요."
-          defaultValue={props.data?.fetchBoard?.youtubeUrl || ""}
+          defaultValue={props.data?.fetchBoard?.youtubeUrl ?? ""}
         />
         <S.ErrorMessage></S.ErrorMessage>
       </S.InputWrapper>
       <S.ImageWrapper>
         <S.Label>사진 첨부</S.Label>
-        <S.UploadButton onClick={props.onClickImage}>+</S.UploadButton>
-        <S.UploadFile type="file" ref={props.fileRef} onChange={props.onChangeFile} />
-        {(!!props.imageUrl && (
-          <S.UploadImage src={`https://storage.googleapis.com/${props.imageUrl}`} />
-        )) ||
-          (props.data?.fetchBoard?.images && (
-            <S.UploadImage
-              src={`https://storage.googleapis.com/${props.data?.fetchBoard?.images}`}
-            />
-          ))}
-        <S.UploadButton onClick={props.onClickImage}>+</S.UploadButton>
-        <S.UploadFile type="file" ref={props.fileRef} onChange={props.onChangeFile} />
-        {(!!props.imageUrl && (
-          <S.UploadImage src={`https://storage.googleapis.com/${props.imageUrl}`} />
-        )) ||
-          (props.data?.fetchBoard?.images && (
-            <S.UploadImage
-              src={`https://storage.googleapis.com/${props.data?.fetchBoard?.images}`}
-            />
-          ))}
-        <S.UploadButton onClick={props.onClickImage}>+</S.UploadButton>
-        <S.UploadFile type="file" ref={props.fileRef} onChange={props.onChangeFile} />
-        {(!!props.imageUrl && (
-          <S.UploadImage src={`https://storage.googleapis.com/${props.imageUrl}`} />
-        )) ||
-          (props.data?.fetchBoard?.images && (
-            <S.UploadImage
-              src={`https://storage.googleapis.com/${props.data?.fetchBoard?.images}`}
-            />
-          ))}
+        {props.imageUrls.map((el, index) => (
+          <Upload01
+            key={uuidv4()}
+            index={index}
+            fileUrl={el}
+            onChangeFileUrl={props.onChangeFileUrl}
+          />
+        ))}
       </S.ImageWrapper>
       <S.OptionWrapper>
         <S.Label>메인 설정</S.Label>

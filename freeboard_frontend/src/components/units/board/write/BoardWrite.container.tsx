@@ -1,19 +1,17 @@
 import { useRouter } from "next/router";
-import { useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import type { ChangeEvent } from "react";
 import { useMutation } from "@apollo/client";
-import { CREATE_BOARD, UPDATE_BOARD, UPLOAD_FILE } from "./BoardWrite.queries";
+import { CREATE_BOARD, UPDATE_BOARD } from "./BoardWrite.queries";
 import BoardWriteUI from "./BoardWrite.presenter";
 import type {
   IMutation,
   IMutationCreateBoardArgs,
   IMutationUpdateBoardArgs,
-  IMutationUploadFileArgs,
 } from "../../../../commons/types/generated/types";
 import type { BoardAddress, IBoardWriteProps, ImyUpdateBoardInput } from "./BoardWrite.types";
 import { Address } from "react-daum-postcode/lib/loadPostcode";
 import { Modal } from "antd";
-import { checkValidationFile } from "../../../../commons/libraries/validationFile";
 
 export default function BoardWrite(props: IBoardWriteProps) {
   const router = useRouter();
@@ -28,23 +26,18 @@ export default function BoardWrite(props: IBoardWriteProps) {
   const [zipcode, setZipcode] = useState("");
   const [address, setAddress] = useState("");
   const [addressDetail, setAddressDetail] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
+  const [imageUrls, setImageUrls] = useState(["", "", ""]);
 
   const [writerError, setWriterError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [titleError, setTitleError] = useState("");
   const [contentsError, setContentsError] = useState("");
 
-  const fileRef = useRef<HTMLInputElement>(null);
-
   const [createBoard] = useMutation<Pick<IMutation, "createBoard">, IMutationCreateBoardArgs>(
     CREATE_BOARD
   );
   const [updateBoard] = useMutation<Pick<IMutation, "updateBoard">, IMutationUpdateBoardArgs>(
     UPDATE_BOARD
-  );
-  const [uploadFile] = useMutation<Pick<IMutation, "uploadFile">, IMutationUploadFileArgs>(
-    UPLOAD_FILE
   );
 
   const onChangeWriter = (event: ChangeEvent<HTMLInputElement>) => {
@@ -103,6 +96,12 @@ export default function BoardWrite(props: IBoardWriteProps) {
     setAddressDetail(event.target.value);
   };
 
+  const onChangeFileUrl = (fileUrl: string, index: number) => {
+    const newFileUrl = [...imageUrls];
+    newFileUrl[index] = fileUrl;
+    setImageUrls(newFileUrl);
+  };
+
   const onToggleModal = () => {
     SetIsOpen((prev) => !prev);
   };
@@ -113,25 +112,11 @@ export default function BoardWrite(props: IBoardWriteProps) {
     SetIsOpen((prev) => !prev);
   };
 
-  const onChangeFile = async (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    console.log(file);
-
-    const isValid = checkValidationFile(file);
-    if (!isValid) return;
-
-    try {
-      const result = await uploadFile({ variables: { file } });
-      console.log(result.data?.uploadFile.url);
-      setImageUrl(result.data?.uploadFile.url || "");
-    } catch (error) {
-      if (error instanceof Error) Modal.error({ content: error.message });
+  useEffect(() => {
+    if (props.data?.fetchBoard?.images?.length) {
+      setImageUrls([...props.data?.fetchBoard?.images]);
     }
-  };
-
-  const onClickImage = () => {
-    fileRef.current?.click();
-  };
+  }, []);
 
   const onClickSubmit = async () => {
     if (!writer) {
@@ -164,7 +149,7 @@ export default function BoardWrite(props: IBoardWriteProps) {
                 address,
                 addressDetail,
               },
-              images: [imageUrl],
+              images: imageUrls,
             },
           },
         });
@@ -184,17 +169,39 @@ export default function BoardWrite(props: IBoardWriteProps) {
   };
 
   const onClickEdit = async () => {
-    const boardAddress: BoardAddress = {};
-    if (zipcode) boardAddress.zipcode = zipcode;
-    if (address) boardAddress.address = address;
-    if (addressDetail) boardAddress.addressDetail = addressDetail;
+    const currentFiles = JSON.stringify(imageUrls);
+    const defaultFiles = JSON.stringify(props.data?.fetchBoard?.images);
+    const isChangeFiles = currentFiles !== defaultFiles;
+
+    if (
+      !title &&
+      !contents &&
+      !youtubeUrl &&
+      !address &&
+      !addressDetail &&
+      !zipcode &&
+      !isChangeFiles
+    ) {
+      Modal.info({ content: " 수정한 내용이 없습니다." });
+      return;
+    }
+
+    if (!password) {
+      Modal.error({ content: " 비밀번호를 입력해주세요!" });
+      return;
+    }
 
     const myUpdateBoardInput: ImyUpdateBoardInput = {};
     if (title) myUpdateBoardInput.title = title;
     if (contents) myUpdateBoardInput.contents = contents;
     if (youtubeUrl) myUpdateBoardInput.youtubeUrl = youtubeUrl;
-    if (boardAddress) myUpdateBoardInput.boardAddress = boardAddress;
-    if (imageUrl) myUpdateBoardInput.images = [imageUrl];
+    if (zipcode || address || addressDetail) {
+      const boardAddress: BoardAddress = {};
+      if (zipcode) boardAddress.zipcode = zipcode;
+      if (address) boardAddress.address = address;
+      if (addressDetail) boardAddress.addressDetail = addressDetail;
+    }
+    if (isChangeFiles) myUpdateBoardInput.images = imageUrls;
 
     try {
       const result = await updateBoard({
@@ -228,12 +235,11 @@ export default function BoardWrite(props: IBoardWriteProps) {
       onChangeContents={onChangeContents}
       onChangeYoutubeUrl={onChangeYoutubeUrl}
       onChangeAddressDetail={onChangeAddressDetail}
-      onChangeFile={onChangeFile}
+      onChangeFileUrl={onChangeFileUrl}
       onCompleteAddressSearch={onCompleteAddressSearch}
       onToggleModal={onToggleModal}
       onClickSubmit={onClickSubmit}
       onClickEdit={onClickEdit}
-      onClickImage={onClickImage}
       isActive={isActive}
       isOpen={isOpen}
       zipcode={zipcode}
@@ -241,8 +247,7 @@ export default function BoardWrite(props: IBoardWriteProps) {
       addressDetail={addressDetail}
       isEdit={props.isEdit}
       data={props.data}
-      fileRef={fileRef}
-      imageUrl={imageUrl}
+      imageUrls={imageUrls}
     />
   );
 }
