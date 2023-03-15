@@ -5,16 +5,19 @@ import Layout from "../src/components/commons/layout";
 import ApolloSetting from "../src/components/commons/apollo";
 import { globalStyles } from "../src/commons/styles/globalStyles";
 import { Global } from "@emotion/react";
+import { RecoilRoot } from "recoil";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <ApolloSetting>
-      <>
-        <Global styles={globalStyles} />
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </>
-    </ApolloSetting>
+    <RecoilRoot>
+      <ApolloSetting>
+        <>
+          <Global styles={globalStyles} />
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </>
+      </ApolloSetting>
+    </RecoilRoot>
   );
 }
