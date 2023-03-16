@@ -30,6 +30,7 @@ export const InnerLogo = styled.div`
 export const InnerButtonWrapper = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: center;
   font-size: 1.2rem;
   gap: 1rem;
 `;
@@ -40,3 +41,10 @@ export const InnerButton = styled.button`
   background: none;
   color: #5729ff;
 `;
+
+export const Avatar = styled.img`
+  width: 40px;
+  height: 40px;
+`;
+
+export const User = styled.div``;
