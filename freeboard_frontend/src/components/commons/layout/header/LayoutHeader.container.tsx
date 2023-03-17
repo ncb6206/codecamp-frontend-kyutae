@@ -23,6 +23,7 @@ export default function LayoutHeader() {
 
   const onClickLogout = () => {
     void router.push("/boards");
+    localStorage.removeItem("accessToken");
   };
 
   return (

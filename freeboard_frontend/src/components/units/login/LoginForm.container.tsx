@@ -42,6 +42,7 @@ export default function LoginForm() {
         return;
       }
       setAceessToken(accessToken);
+      localStorage.setItem("accessToken", accessToken);
 
       Modal.success({ content: "로그인되었습니다!!" });
       void router.push("/boards");
