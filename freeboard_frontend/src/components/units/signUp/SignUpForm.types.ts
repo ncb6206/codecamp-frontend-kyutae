@@ -1,8 +1,14 @@
-import { ChangeEvent } from "react";
+import { FormState, UseFormHandleSubmit, UseFormRegister } from "react-hook-form";
 
 export interface ISignUpFormUIProps {
-  onChangeName: (event: ChangeEvent<HTMLInputElement>) => void;
-  onChangeEmail: (event: ChangeEvent<HTMLInputElement>) => void;
-  onChangePassword: (event: ChangeEvent<HTMLInputElement>) => void;
-  onClickSignUp: () => void;
+  register: UseFormRegister<ISignUpFormData>;
+  handleSubmit: UseFormHandleSubmit<ISignUpFormData>;
+  formState: FormState<ISignUpFormData>;
+  onClickSignUp: (data: ISignUpFormData) => void;
+}
+
+export interface ISignUpFormData {
+  name: string;
+  email: string;
+  password: string;
 }

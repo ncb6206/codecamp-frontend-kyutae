@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useQuery } from "@apollo/client";
 import BoardListUI from "./BoardLists.presenter";
 import { FETCH_BOARDS, FETCH_BOARDS_COUNT } from "./BoardLists.queries";
@@ -6,8 +7,8 @@ import type {
   IQueryFetchBoardsArgs,
   IQueryFetchBoardsCountArgs,
 } from "../../../../commons/types/generated/types";
-import { useMoveToPage } from "../../../commons/hooks/useMoveToPage";
-import { useSearch } from "../../../commons/hooks/useSearch";
+import { useMoveToPage } from "../../src/components/commons/hooks/useMoveToPage";
+import { useSearch } from "../../src/components/commons/hooks/useSearch";
 
 export default function BoardList() {
   const { onClickMoveToPage } = useMoveToPage();
@@ -25,10 +26,10 @@ export default function BoardList() {
   return (
     <BoardListUI
       data={data}
-      onClickMoveToPage={onClickMoveToPage}
       count={dataBoardsCount?.fetchBoardsCount}
       refetchBoardsCount={refetchBoardsCount}
       onChangeKeyword={onChangeKeyword}
+      onClickMoveToPage={onClickMoveToPage}
       keyword={keyword}
       refetch={refetch}
     />

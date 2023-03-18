@@ -40,7 +40,7 @@ export default function BoardListUI(props: IBoardListUIProps) {
       <S.TableBottom />
       <S.Footer>
         <Paginations01 count={props.count} refetch={props.refetch} />
-        <S.Button onClick={props.onClickMoveToPage("/boards/new")}>
+        <S.Button onClick={props.onClickMoveToPage(`/boards/new`)}>
           <S.PencilIcon src="images/board/list/write.png" />
           게시물 등록하기
         </S.Button>

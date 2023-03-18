@@ -1,47 +1,28 @@
 import SignUpFormUI from "./SignUpForm.presenter";
-import { ChangeEvent, useState } from "react";
 import { useMutation } from "@apollo/client";
 import { CREATE_USER } from "./SignUpForm.queries";
 import { IMutation, IMutationCreateUserArgs } from "../../../commons/types/generated/types";
 import { Modal } from "antd";
 import { useRouter } from "next/router";
+import { schema } from "./SignupForm.yup";
+import { ISignUpFormData } from "./SignUpForm.types";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 export default function SignUpForm() {
   const router = useRouter();
-
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
 
   const [createUser] = useMutation<Pick<IMutation, "createUser">, IMutationCreateUserArgs>(
     CREATE_USER
   );
 
-  const onChangeName = (event: ChangeEvent<HTMLInputElement>) => {
-    setName(event.target.value);
-  };
+  const { register, handleSubmit, formState } = useForm<ISignUpFormData>({
+    resolver: yupResolver(schema),
+    mode: "onChange",
+  });
 
-  const onChangeEmail = (event: ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.target.value);
-  };
-
-  const onChangePassword = (event: ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value);
-  };
-
-  const onClickSignUp = async () => {
-    if (!name || !email || !password) {
-      Modal.error({ content: "빈칸을 모두 입력해주세요!" });
-      return;
-    }
-
-    const emailRegex =
-      /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/g;
-    if (!emailRegex.test(email)) {
-      Modal.error({ content: "이메일을 제대로 입력해주세요!" });
-      return;
-    }
-
+  const onClickSignUp = async (data: ISignUpFormData) => {
+    const { name, email, password } = data;
     try {
       const result = await createUser({
         variables: {
@@ -67,9 +48,9 @@ export default function SignUpForm() {
 
   return (
     <SignUpFormUI
-      onChangeName={onChangeName}
-      onChangeEmail={onChangeEmail}
-      onChangePassword={onChangePassword}
+      register={register}
+      handleSubmit={handleSubmit}
+      formState={formState}
       onClickSignUp={onClickSignUp}
     />
   );

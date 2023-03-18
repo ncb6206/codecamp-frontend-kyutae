@@ -1,34 +1,30 @@
 import { useMutation } from "@apollo/client";
 import { Modal } from "antd";
 import { useRouter } from "next/router";
-import { ChangeEvent, useState } from "react";
 import { useRecoilState } from "recoil";
 import { accessTokenState } from "../../../commons/store";
 import { IMutation, IMutationLoginUserArgs } from "../../../commons/types/generated/types";
 import LoginFormUI from "./LoginForm.presenter";
 import { LOGIN_USER } from "./LoginForm.queries";
+import { useForm } from "react-hook-form";
+import { ILoginFormData } from "./LoginForm.types";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { schema } from "./LoginForm.yup";
 
 export default function LoginForm() {
   const router = useRouter();
   const [loginUser] = useMutation<Pick<IMutation, "loginUser">, IMutationLoginUserArgs>(LOGIN_USER);
 
+  const { register, handleSubmit, formState } = useForm<ILoginFormData>({
+    resolver: yupResolver(schema),
+    mode: "onChange",
+  });
+
   const [accessToken, setAceessToken] = useRecoilState(accessTokenState);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
 
-  const onChangeEmail = (event: ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.target.value);
-  };
-
-  const onChangePassword = (event: ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value);
-  };
-
-  const onClickLogin = async () => {
-    if (!email || !password) {
-      Modal.error({ content: "빈칸을 모두 입력해주세요!" });
-      return;
-    }
+  const onClickLogin = async (data: ILoginFormData) => {
+    const { email, password } = data;
+    console.log(email, password);
 
     try {
       const result = await loginUser({
@@ -53,8 +49,9 @@ export default function LoginForm() {
 
   return (
     <LoginFormUI
-      onChangeEmail={onChangeEmail}
-      onChangePassword={onChangePassword}
+      register={register}
+      handleSubmit={handleSubmit}
+      formState={formState}
       onClickLogin={onClickLogin}
     />
   );

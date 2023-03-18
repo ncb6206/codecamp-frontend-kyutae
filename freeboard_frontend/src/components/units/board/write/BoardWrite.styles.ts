@@ -60,21 +60,6 @@ export const Subject = styled.input`
   border: 1px solid #bdbdbd;
 `;
 
-export const Content = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-`;
-
-export const ContentWord = styled.label`
-  font-family: "Noto Sans CJK KR";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 24px;
-`;
-
 export const Contents = styled.textarea`
   width: 996px;
   height: 480px;

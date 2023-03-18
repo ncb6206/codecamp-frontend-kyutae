@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
-import { Button, Input } from "antd";
+import { Button } from "antd";
 
-export const LoginFormWrapper = styled.div`
+export const LoginFormWrapper = styled.form`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -39,8 +39,11 @@ export const InputLabel = styled.label`
   margin-bottom: 1rem;
 `;
 
-export const InputBox = styled(Input)`
+export const InputBox = styled.input`
+  width: 100%;
   height: 3rem;
+  padding-left: 1rem;
+  border: 1px solid #bdbdbd;
   border-radius: 10px;
   margin-bottom: 1rem;
 `;
@@ -51,4 +54,8 @@ export const LoginButton = styled(Button)`
   height: 4rem;
   font-size: 25px;
   border-radius: 8px;
+`;
+
+export const ErrorMessage = styled.div`
+  color: red;
 `;
