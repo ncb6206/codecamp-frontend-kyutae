@@ -1,13 +1,8 @@
-import { MouseEvent } from "react";
-import { useRouter } from "next/router";
 import LayoutNavigationUI from "./LayoutNavigation.presenter";
+import { useMoveToPage } from "../../hooks/useMoveToPage";
 
 export default function LayoutNavigation() {
-  const router = useRouter();
+  const { onClickMoveToPage } = useMoveToPage();
 
-  const onClickMenu = (event: MouseEvent<HTMLDivElement>) => {
-    void router.push(event.currentTarget.id);
-  };
-
-  return <LayoutNavigationUI onClickMenu={onClickMenu} />;
+  return <LayoutNavigationUI onClickMoveToPage={onClickMoveToPage} />;
 }

@@ -19,20 +19,20 @@ export const FETCH_USEDITEMS = gql`
   }
 `;
 
-export const FETCH_USEDITEMS_COUNT_IBOUGHT = gql`
-  query fetchUseditemsCountIBought(){
-    fetchUseditemsCountIBought
-  }
-`;
+// export const FETCH_USEDITEMS_COUNT_IBOUGHT = gql`
+//   query fetchUseditemsCountIBought(){
+//     fetchUseditemsCountIBought
+//   }
+// `;
 
-export const FETCH_USEDITEMS_COUNT_IPICKED = gql`
-  query fetchUseditemsCountIPicked(){
-    fetchUseditemsCountIPicked
-  }
-`;
+// export const FETCH_USEDITEMS_COUNT_IPICKED = gql`
+//   query fetchUseditemsCountIPicked(){
+//     fetchUseditemsCountIPicked
+//   }
+// `;
 
-export const FETCH_USEDITEMS_COUNT_ISOLD = gql`
-  query fetchUseditemsCountISold(){
-    fetchUseditemsCountISold
-  }
-`;
+// export const FETCH_USEDITEMS_COUNT_ISOLD = gql`
+//   query fetchUseditemsCountISold(){
+//     fetchUseditemsCountISold
+//   }
+// `;

@@ -15,7 +15,7 @@ export default function LayoutNavigationUI(props: LayoutNavigationUIProps) {
     <S.Wrapper>
       {SelectMenu.map((el) => (
         <Fragment key={el.page}>
-          <S.MenuItem id={el.page} onClick={props.onClickMenu}>
+          <S.MenuItem id={el.page} onClick={props.onClickMoveToPage(el.page)}>
             {el.name}
           </S.MenuItem>
         </Fragment>

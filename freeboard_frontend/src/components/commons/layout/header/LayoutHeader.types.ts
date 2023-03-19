@@ -1,9 +1,7 @@
 import { IQuery } from "../../../../commons/types/generated/types";
 
 export interface LayoutHeaderUIProps {
-  onClickLogo: () => void;
-  onClickLogin: () => void;
-  onClickSignup: () => void;
+  onClickMoveToPage: (path: string) => () => void;
   onClickLogout: () => void;
   data?: Pick<IQuery, "fetchUserLoggedIn">;
 }

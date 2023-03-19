@@ -9,6 +9,12 @@ import { RecoilRoot } from "recoil";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
+    // {  <Head>  모든 페이지에서 카카오맵을 다운로드 받으모로 비효율적임
+    //   <script
+    //     type="text/javascript"
+    //     src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${String(KAKAO_KEY)}`}
+    //   ></script>
+    // </Head>  }
     <RecoilRoot>
       <ApolloSetting>
         <>

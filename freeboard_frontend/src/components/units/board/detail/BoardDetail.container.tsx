@@ -10,9 +10,11 @@ import type {
   IQuery,
   IQueryFetchBoardArgs,
 } from "../../../../commons/types/generated/types";
+import { useMoveToPage } from "../../../commons/hooks/useMoveToPage";
 
 export default function BoardDetail() {
   const router = useRouter();
+  const { onClickMoveToPage } = useMoveToPage();
 
   const [deleteBoard] = useMutation<Pick<IMutation, "deleteBoard">, IMutationDeleteBoardArgs>(
     DELETE_BOARD
@@ -40,14 +42,6 @@ export default function BoardDetail() {
     } catch (error) {
       if (error instanceof Error) console.log(error.message);
     }
-  };
-
-  const onClickMoveToBoardList = async () => {
-    await router.push("/boards");
-  };
-
-  const onClickEdit = async () => {
-    await router.push(`/boards/${String(router.query.boardId)}/edit`);
   };
 
   const onClickLike = async () => {
@@ -89,9 +83,8 @@ export default function BoardDetail() {
   return (
     <BoardDetailUI
       data={data}
-      onClickMoveToBoardList={onClickMoveToBoardList}
       onClickDelete={onClickDelete}
-      onClickEdit={onClickEdit}
+      onClickMoveToPage={onClickMoveToPage}
       onClickLike={onClickLike}
       onClickDislike={onClickDislike}
     />

@@ -4,7 +4,6 @@ import type { IBoardDetailUIProps } from "./BoardDetail.types";
 import YouTube, { YouTubeProps } from "react-youtube";
 
 export default function BoardDetailUI(props: IBoardDetailUIProps) {
-  console.log(props.data?.fetchBoard);
   const opts: YouTubeProps["opts"] = {
     width: "800",
     height: "600",
@@ -60,8 +59,12 @@ export default function BoardDetailUI(props: IBoardDetailUIProps) {
         </S.Footer>
       </S.CardWrapper>
       <S.BottomWrapper>
-        <S.Button onClick={props.onClickMoveToBoardList}>목록으로</S.Button>
-        <S.Button onClick={props.onClickEdit}>수정하기</S.Button>
+        <S.Button onClick={props.onClickMoveToPage("/boards")}>목록으로</S.Button>
+        <S.Button
+          onClick={props.onClickMoveToPage(`/boards/${String(props.data?.fetchBoard?._id)}/edit`)}
+        >
+          수정하기
+        </S.Button>
         <S.Button onClick={props.onClickDelete}>삭제하기</S.Button>
       </S.BottomWrapper>
     </S.Wrapper>
