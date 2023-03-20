@@ -11,6 +11,8 @@ import type {
   IQueryFetchBoardArgs,
 } from "../../../../commons/types/generated/types";
 import { useMoveToPage } from "../../../commons/hooks/useMoveToPage";
+import { Modal } from "antd";
+import { FETCH_BOARDS } from "../lists/BoardLists.queries";
 
 export default function BoardDetail() {
   const router = useRouter();
@@ -36,8 +38,10 @@ export default function BoardDetail() {
         variables: {
           boardId: String(router.query.boardId),
         },
+        refetchQueries: [{ query: FETCH_BOARDS }],
       });
-      alert("삭제되었습니다!");
+
+      Modal.success({ content: "삭제가 완료되었습니다!" });
       await router.push(`/boards`);
     } catch (error) {
       if (error instanceof Error) console.log(error.message);

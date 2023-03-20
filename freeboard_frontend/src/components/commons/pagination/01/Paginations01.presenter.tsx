@@ -12,7 +12,7 @@ export default function Paginations01UI(props: Paginations01UIProps) {
           <S.BoardList
             key={index + props.startPage}
             id={String(index + props.startPage)}
-            onClick={props.onClickPage}
+            onClick={props.onClickPage(index + props.startPage)}
             isActive={props.startPage + index === props.activedPage}
           >
             {index + props.startPage}

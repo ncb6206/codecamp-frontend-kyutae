@@ -1,4 +1,4 @@
-// import ReactQuill from "react-quill";
+// import ReactQuill from "react-quill";  // 다이나믹 임포트로 변경
 import "react-quill/dist/quill.snow.css";
 import dynamic from "next/dynamic";
 import { useForm } from "react-hook-form";

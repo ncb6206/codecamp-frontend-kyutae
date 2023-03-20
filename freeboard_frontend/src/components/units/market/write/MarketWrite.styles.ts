@@ -2,6 +2,10 @@ import styled from "@emotion/styled";
 import Modal from "antd/lib/modal/Modal";
 import DaumPostcodeEmbed from "react-daum-postcode";
 import { ISubmitButtonProps } from "./MarketWrite.types";
+import dynamic from "next/dynamic";
+import "react-quill/dist/quill.snow.css";
+
+const ReactQuill = dynamic(async () => await import("react-quill"), { ssr: false });
 
 export const Wrapper = styled.form`
   width: 1200px;
@@ -30,7 +34,7 @@ export const UseditemWrapper = styled.div`
 
 export const InputWrapper = styled.div`
   width: 100%;
-  padding-top: 40px;
+  margin: 20px 0;
 `;
 
 export const Label = styled.div`
@@ -108,15 +112,6 @@ export const GPSWrapper = styled.div`
   gap: 1rem;
 `;
 
-export const Contents = styled.textarea`
-  width: 100%;
-  height: 480px;
-  padding: 14px;
-  padding-left: 16px;
-  border: 1px solid #bdbdbd;
-  resize: none;
-`;
-
 export const ZipCodeWrapper = styled.div`
   display: flex;
   flex-direction: row;
@@ -144,6 +139,8 @@ export const GpsLat = styled.input`
   padding-left: 16px;
   border: 1px solid #bdbdbd;
 `;
+
+export const Contents = ReactQuill;
 
 export const GpsLng = styled.input`
   width: 7rem;

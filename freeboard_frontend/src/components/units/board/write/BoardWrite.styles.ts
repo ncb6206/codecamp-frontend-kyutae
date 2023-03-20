@@ -3,7 +3,7 @@ import Modal from "antd/lib/modal/Modal";
 import DaumPostcodeEmbed from "react-daum-postcode";
 import type { ISubmitButtonProps } from "./BoardWrite.types";
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.form`
   width: 1200px;
   margin: 100px;
   padding: 80px 102px 100px;

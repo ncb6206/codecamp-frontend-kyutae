@@ -54,7 +54,7 @@ export const ListPrice = styled.div`
 export const Footer = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
+  justify-content: space-between;
 `;
 
 export const Button = styled.button`

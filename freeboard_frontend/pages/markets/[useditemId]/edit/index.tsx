@@ -1,10 +1,8 @@
-import { useRouter } from "next/router";
 import MarketWrite from "../../../../src/components/units/market/write/MarketWrite.container";
-import { useQuery } from "@apollo/client";
+import { useAuth } from "../../../../src/components/commons/hooks/useAuth";
 
 export default function MarketEditPage() {
-  //   const router = useRouter();
+  useAuth();
 
-  //   const {data} = useQuery()
   return <MarketWrite isEdit={true} />;
 }

@@ -1,4 +1,4 @@
-import { MouseEvent, useState } from "react";
+import { useState } from "react";
 import Paginations01UI from "./Paginations01.presenter";
 import { Paginations01Props } from "./Paginations01.types";
 
@@ -7,8 +7,8 @@ export default function Paginations01(props: Paginations01Props) {
   const [activedPage, setActivedPage] = useState(1);
   const lastPage = props.count ? Math.ceil(props.count / 10) : 0;
 
-  const onClickPage = async (event: MouseEvent<HTMLSpanElement>) => {
-    const activedPage = Number(event?.currentTarget.id);
+  const onClickPage = (value: number) => async () => {
+    const activedPage = value;
     setActivedPage(activedPage);
     await props.refetch({ page: activedPage });
   };

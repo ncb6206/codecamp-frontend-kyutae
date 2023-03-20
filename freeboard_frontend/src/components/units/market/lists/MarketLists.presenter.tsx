@@ -1,6 +1,7 @@
 import Paginations01 from "../../../commons/pagination/01/Paginations01.container";
 import * as S from "./MarketLists.styles";
 import { IMarketListsUIProps } from "./MarketLists.types";
+import Dompurify from "dompurify";
 
 export default function MarketListsUI(props: IMarketListsUIProps) {
   console.log(props.data?.fetchUseditems);
@@ -18,7 +19,9 @@ export default function MarketListsUI(props: IMarketListsUIProps) {
             </S.ListImageWrapper>
             <S.ListContent onClick={props.onClickMoveToPage(`/markets/${el._id}`)}>
               <S.ListName>{el.name}</S.ListName>
-              <S.ListContents>{el.contents}</S.ListContents>
+              <S.ListContents
+                dangerouslySetInnerHTML={{ __html: Dompurify.sanitize(el.contents) }}
+              />
               <S.ListRemarks>{el.remarks}</S.ListRemarks>
               <S.ListPickedCount>{el.pickedCount}</S.ListPickedCount>
             </S.ListContent>
@@ -27,7 +30,7 @@ export default function MarketListsUI(props: IMarketListsUIProps) {
         ))}
       </S.ListWrapper>
       <S.Footer>
-        <Paginations01 refetch={props.refetch} />
+        <Paginations01 count={100} refetch={props.refetch} />
         <S.Button onClick={props.onClickMoveToPage("/markets/new")}>상품 등록하기</S.Button>
       </S.Footer>
     </S.Wrapper>
