@@ -30,7 +30,7 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
             type="text"
             placeholder="이름을 적어주세요"
             {...props.register("writer")}
-            defaultValue={props.data?.fetchBoard.writer ?? ""}
+            defaultValue={props.data?.fetchBoard.writer || ""}
             readOnly={!!props.data?.fetchBoard.writer}
           />
           <S.ErrorMessage>{props.formState.errors.writer?.message}</S.ErrorMessage>
@@ -69,9 +69,8 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
         <S.ZipCodeWrapper>
           <S.Zipcode
             readOnly
-            value={props.zipcode ?? props.data?.fetchBoard?.boardAddress?.zipcode ?? ""}
+            value={props.zipcode || props.data?.fetchBoard?.boardAddress?.zipcode || ""}
             placeholder="07250"
-            {...props.register("boardAddress.zipcode")}
           />
           <S.SearchButton type="button" onClick={props.onToggleModal}>
             우편번호 검색
@@ -79,13 +78,12 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
         </S.ZipCodeWrapper>
         <S.Address
           readOnly
-          value={props.address ?? props.data?.fetchBoard.boardAddress?.address ?? ""}
-          {...props.register("boardAddress.address")}
+          value={props.address || props.data?.fetchBoard.boardAddress?.address || ""}
         />
         <S.ErrorMessage></S.ErrorMessage>
         <S.Address
+          defaultValue={props.data?.fetchBoard.boardAddress?.addressDetail || ""}
           {...props.register("boardAddress.addressDetail")}
-          defaultValue={props.data?.fetchBoard.boardAddress?.addressDetail ?? ""}
         />
         <S.ErrorMessage></S.ErrorMessage>
       </S.InputWrapper>
@@ -93,7 +91,7 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
         <S.Label>유튜브</S.Label>
         <S.Youtube
           placeholder="링크를 복사해주세요."
-          defaultValue={props.data?.fetchBoard?.youtubeUrl ?? ""}
+          defaultValue={props.data?.fetchBoard?.youtubeUrl || ""}
           {...props.register("youtubeUrl")}
         />
         <S.ErrorMessage></S.ErrorMessage>

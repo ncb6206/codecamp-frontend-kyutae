@@ -2,8 +2,10 @@ import { getMyDate } from "../../../../commons/libraries/util";
 import * as S from "./BoardDetail.styles";
 import type { IBoardDetailUIProps } from "./BoardDetail.types";
 import YouTube, { YouTubeProps } from "react-youtube";
+import { useEffect, useState } from "react";
 
 export default function BoardDetailUI(props: IBoardDetailUIProps) {
+  const [videoId, setVideoId] = useState("");
   const opts: YouTubeProps["opts"] = {
     width: "800",
     height: "600",
@@ -13,6 +15,15 @@ export default function BoardDetailUI(props: IBoardDetailUIProps) {
     },
   };
 
+  useEffect(() => {
+    if (props.data?.fetchBoard?.youtubeUrl) {
+      const url = new URL(props.data?.fetchBoard?.youtubeUrl);
+      const videoId = url.searchParams.get("v");
+      if (typeof videoId === "string") setVideoId(videoId);
+    }
+  }, []);
+
+  console.log(props.data?.fetchBoard);
   return (
     <S.Wrapper>
       <S.CardWrapper>
@@ -35,9 +46,7 @@ export default function BoardDetailUI(props: IBoardDetailUIProps) {
           <S.Title>{props.data?.fetchBoard?.title}</S.Title>
           <S.Contents>{props.data?.fetchBoard?.contents}</S.Contents>
           <S.YoutubeWrapper>
-            {props.data?.fetchBoard?.youtubeUrl && (
-              <YouTube videoId={String(props.data?.fetchBoard?.youtubeUrl)} opts={opts} />
-            )}
+            {props.data?.fetchBoard?.youtubeUrl && <YouTube videoId={videoId} opts={opts} />}
           </S.YoutubeWrapper>
           <S.ImageWrapper>
             {props.data?.fetchBoard?.images

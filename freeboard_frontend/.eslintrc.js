@@ -20,5 +20,6 @@ module.exports = {
     "@typescript-eslint/consistent-type-imports": "off",
     "react/display-name": "off",
     "@typescript-eslint/no-confusing-void-expression": "off",
+    "@typescript-eslint/prefer-nullish-coalescing": "off",
   },
 };
