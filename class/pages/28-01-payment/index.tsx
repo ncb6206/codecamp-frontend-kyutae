@@ -8,7 +8,7 @@ declare const window: typeof globalThis & {
 export default function PaymentPage() {
   const onClickPayment = () => {
     const IMP = window.IMP; // 생략 가능
-    IMP.init("{imp어쩌구 들어가는자리}"); // 예: imp00000000a
+    IMP.init("가맹점 식별코드"); // 예: imp00000000a
 
     // IMP.request_pay(param, callback) 결제창 호출
     IMP.request_pay(
