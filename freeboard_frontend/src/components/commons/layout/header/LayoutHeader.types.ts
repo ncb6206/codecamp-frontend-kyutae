@@ -4,4 +4,5 @@ export interface LayoutHeaderUIProps {
   onClickMoveToPage: (path: string) => () => void;
   onClickLogout: () => void;
   data?: Pick<IQuery, "fetchUserLoggedIn">;
+  accessToken: string;
 }

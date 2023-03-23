@@ -7,7 +7,7 @@ export default function LayoutHeaderUI(props: LayoutHeaderUIProps) {
       <S.InnerWrapper>
         <S.InnerLogo onClick={props.onClickMoveToPage("/")}>💎 LIVE</S.InnerLogo>
         <S.InnerButtonWrapper>
-          {props.data ? (
+          {props.accessToken ? (
             <>
               <S.Avatar src="/images/avatar.png" />
               <S.User>{props.data?.fetchUserLoggedIn?.name}님 환영합니다!</S.User>
