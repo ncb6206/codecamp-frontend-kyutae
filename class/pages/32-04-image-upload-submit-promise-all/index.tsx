@@ -23,7 +23,7 @@ export default function ImageUploadPage() {
   // const [imageUrl, setImageUrl] = useState("");
   // const [file, setFile] = useState<File>();
   const [imageUrls, setImageUrls] = useState(["", "", ""]);
-  const [files, setFiles] = useState<File[]>([, ,]);
+  const [files, setFiles] = useState<File[]>([]);
 
   const [uploadFile] = useMutation<Pick<IMutation, "uploadFile">, IMutationUploadFileArgs>(
     UPLOAD_FILE

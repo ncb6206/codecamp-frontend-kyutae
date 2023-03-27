@@ -23,7 +23,7 @@ export interface IBoardWriteUIProps {
   // onChangeContents: (event: ChangeEvent<HTMLTextAreaElement>) => void;
   // onChangeYoutubeUrl: (event: ChangeEvent<HTMLInputElement>) => void;
   // onChangeAddressDetail: (event: ChangeEvent<HTMLInputElement>) => void;
-  onChangeFileUrl: (fileUrl: string, index: number) => void;
+  onChangeFileUrl: (imageUrl: string, fileUrl: string, index: number) => void;
   onCompleteAddressSearch: (address: Address) => void;
   onClickSubmit: (data: IBoardData) => Promise<void>;
   onClickEdit: (data: IBoardData) => Promise<void>;

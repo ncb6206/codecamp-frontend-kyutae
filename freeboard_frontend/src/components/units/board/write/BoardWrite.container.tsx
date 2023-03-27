@@ -27,6 +27,7 @@ export default function BoardWrite(props: IBoardWriteProps) {
   const [zipcode, setZipcode] = useState("");
   const [address, setAddress] = useState("");
   const [imageUrls, setImageUrls] = useState(["", "", ""]);
+  const [files, setFiles] = useState(["", "", ""]);
 
   const [createBoard] = useMutation<Pick<IMutation, "createBoard">, IMutationCreateBoardArgs>(
     CREATE_BOARD
@@ -35,7 +36,12 @@ export default function BoardWrite(props: IBoardWriteProps) {
     UPDATE_BOARD
   );
 
-  const onChangeFileUrl = (fileUrl: string, index: number) => {
+  const onChangeFileUrl = (imageUrl: string, fileUrl: string, index: number) => {
+    const newFiles = [...files];
+    newFiles[index] = imageUrl;
+    setFiles(newFiles);
+    console.log(files);
+
     const newFileUrl = [...imageUrls];
     newFileUrl[index] = fileUrl;
     setImageUrls(newFileUrl);
