@@ -5,7 +5,7 @@ export default function LayoutHeaderUI(props: LayoutHeaderUIProps) {
   return (
     <S.Wrapper>
       <S.InnerWrapper>
-        <S.InnerLogo onClick={props.onClickMoveToPage("/")}>💎 LIVE</S.InnerLogo>
+        <S.InnerLogo onClick={props.onClickMoveToPage("/")}>💎 다이아 마켓</S.InnerLogo>
         <S.InnerButtonWrapper>
           {props.accessToken ? (
             <>

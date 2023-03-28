@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import { Rate } from "antd";
 
 export const Wrapper = styled.form`
   width: 60rem;
@@ -78,5 +77,3 @@ export const Button = styled.button`
   color: #ffffff;
   cursor: pointer;
 `;
-
-export const RateIcon = styled(Rate)``;

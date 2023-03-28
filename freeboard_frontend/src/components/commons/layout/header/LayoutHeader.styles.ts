@@ -22,7 +22,6 @@ export const InnerLogo = styled.div`
   font-size: 30px;
   font-weight: bold;
   font-family: "live";
-  font-style: italic;
   color: #5729ff;
   cursor: pointer;
 `;

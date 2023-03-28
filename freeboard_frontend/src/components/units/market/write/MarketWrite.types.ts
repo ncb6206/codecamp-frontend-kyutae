@@ -1,4 +1,4 @@
-import { InputMaybe } from "../../../../commons/types/generated/types";
+import { InputMaybe, IQuery } from "../../../../commons/types/generated/types";
 import { FormState, UseFormHandleSubmit, UseFormRegister } from "react-hook-form";
 
 export interface UseditemAddressInput {
@@ -24,8 +24,9 @@ export interface IMarketWriteUIProps {
   onClickMarketWrite: (data: IMarketWriteData) => void;
   onClickEdit: (data: IMarketWriteData) => void;
   onChangeContents: (value: string) => void;
-  onChangeFileUrl: (fileUrl: string, index: number) => void;
+  onChangeFileUrl: (imageUrl: string, fileUrl: string, index: number) => void;
   isEdit: boolean;
+  data?: Pick<IQuery, "fetchUseditem">;
   imageUrls: string[];
 }
 
@@ -35,6 +36,7 @@ export interface ISubmitButtonProps {
 
 export interface IMarketWriteProps {
   isEdit: boolean;
+  data?: Pick<IQuery, "fetchUseditem">;
 }
 
 export interface ImyUpdateUseditemInput {

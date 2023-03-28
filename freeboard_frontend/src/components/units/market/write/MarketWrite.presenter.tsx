@@ -15,7 +15,12 @@ export default function MarketWriteUI(props: IMarketWriteUIProps) {
       <S.Title>{props.isEdit ? "상품 수정하기" : "상품 등록하기"}</S.Title>
       <S.InputWrapper>
         <S.Label>상품명</S.Label>
-        <S.Name type="text" placeholder="상품명을 작성해주세요." {...props.register("name")} />
+        <S.Name
+          type="text"
+          placeholder="상품명을 작성해주세요."
+          defaultValue={props.data?.fetchUseditem.name || ""}
+          {...props.register("name")}
+        />
         <S.ErrorMessage>{props.formState.errors.name?.message}</S.ErrorMessage>
       </S.InputWrapper>
       <S.InputWrapper>
@@ -23,6 +28,7 @@ export default function MarketWriteUI(props: IMarketWriteUIProps) {
         <S.Remarks
           type="text"
           placeholder="한줄요약을 작성해주세요."
+          defaultValue={props.data?.fetchUseditem.remarks || ""}
           {...props.register("remarks")}
         />
         <S.ErrorMessage>{props.formState.errors.remarks?.message}</S.ErrorMessage>
@@ -32,13 +38,19 @@ export default function MarketWriteUI(props: IMarketWriteUIProps) {
         <S.Contents
           style={{ height: "20rem", marginBottom: "3rem" }}
           placeholder="상품을 설명해주세요."
+          defaultValue={props.data?.fetchUseditem.contents || ""}
           onChange={props.onChangeContents}
         />
         <S.ErrorMessage>{props.formState.errors.contents?.message}</S.ErrorMessage>
       </S.InputWrapper>
       <S.InputWrapper>
         <S.Label>판매 가격</S.Label>
-        <S.Price type="text" placeholder="판매 가격을 입력해주세요." {...props.register("price")} />
+        <S.Price
+          type="text"
+          placeholder="판매 가격을 입력해주세요."
+          defaultValue={props.data?.fetchUseditem.price || ""}
+          {...props.register("price")}
+        />
         <S.ErrorMessage>{props.formState.errors.price?.message}</S.ErrorMessage>
       </S.InputWrapper>
       <S.InputWrapper>

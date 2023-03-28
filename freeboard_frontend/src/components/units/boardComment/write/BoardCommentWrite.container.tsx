@@ -1,89 +1,83 @@
-import type { ChangeEvent } from "react";
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { useMutation } from "@apollo/client";
 import BoardCommentWriteUI from "./BoardCommentWrite.presenter";
 import { CREATE_BOARD_COMMENT, UPDATE_BOARD_COMMENT } from "./BoardCommentWrite.queries";
 import { FETCH_BOARD_COMMENTS } from "../list/BoardCommentList.queries";
-import type { IBoardWriteProps, ImyUpdateBoardCommentInputProps } from "./BoardCommentWrite.types";
+import type {
+  IBoardCommentData,
+  IBoardWriteProps,
+  ImyUpdateBoardCommentInputProps,
+} from "./BoardCommentWrite.types";
 import type {
   IMutation,
   IMutationCreateBoardCommentArgs,
   IMutationUpdateBoardCommentArgs,
 } from "../../../../commons/types/generated/types";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { schema } from "./BoardCommentWrite.yup";
+import { Modal } from "antd";
 
 export default function BoardCommentWrite(props: IBoardWriteProps) {
   const router = useRouter();
-  const [writer, setWriter] = useState("");
-  const [password, setPassword] = useState("");
-  const [contents, setContents] = useState("");
+  const { register, handleSubmit, formState, reset, watch } = useForm<IBoardCommentData>({
+    resolver: yupResolver(schema),
+    mode: "onChange",
+  });
   const [rating, setRating] = useState(0);
+  const ContentsValue = watch("contents");
 
-  const [createBoardComment] = useMutation<
-    Pick<IMutation, "createBoardComment">,
-    IMutationCreateBoardCommentArgs
-  >(CREATE_BOARD_COMMENT);
-  const [updateBoardComment] = useMutation<
-    Pick<IMutation, "updateBoardComment">,
-    IMutationUpdateBoardCommentArgs
-  >(UPDATE_BOARD_COMMENT);
-
-  const onChangeWriter = (event: ChangeEvent<HTMLInputElement>) => {
-    setWriter(event.target.value);
-  };
-
-  const onChangePassword = (event: ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value);
-  };
-
-  const onChangeContents = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    setContents(event.target.value);
-  };
+  // prettier-ignore
+  const [createBoardComment] = useMutation<Pick<IMutation, "createBoardComment">,IMutationCreateBoardCommentArgs>(CREATE_BOARD_COMMENT);
+  // prettier-ignore
+  const [updateBoardComment] = useMutation<Pick<IMutation, "updateBoardComment">,IMutationUpdateBoardCommentArgs>(UPDATE_BOARD_COMMENT);
 
   const onChangeRating = (value: number) => {
     setRating(value);
   };
 
-  const onClickSubmit = async () => {
-    if (writer && password && contents && rating) {
-      try {
-        const result = await createBoardComment({
-          variables: {
-            createBoardCommentInput: {
-              writer,
-              password,
-              contents,
-              rating,
-            },
-            boardId: String(router.query.boardId),
+  const onClickSubmit = async (data: IBoardCommentData) => {
+    if (!rating) {
+      Modal.error({ content: "별점을 입력해주세요" });
+      return;
+    }
+    const { writer, password, contents } = data;
+
+    try {
+      const result = await createBoardComment({
+        variables: {
+          createBoardCommentInput: {
+            writer,
+            password,
+            contents,
+            rating,
           },
-          refetchQueries: [
-            {
-              query: FETCH_BOARD_COMMENTS,
-              variables: { boardId: String(router.query.boardId) },
-            },
-          ],
-        });
-        console.log(result);
-        alert("댓글이 등록되었습니다!");
-        setWriter("");
-        setPassword("");
-        setContents("");
-        setRating(0);
-      } catch (error) {
-        if (error instanceof Error) alert(error.message);
-      }
-    } else {
-      alert("전체 다 입력해주세요!");
+          boardId: String(router.query.boardId),
+        },
+        refetchQueries: [
+          {
+            query: FETCH_BOARD_COMMENTS,
+            variables: { boardId: String(router.query.boardId) },
+          },
+        ],
+      });
+      console.log(result);
+      Modal.success({ content: "댓글이 등록되었습니다!" });
+      reset();
+      setRating(0);
+    } catch (error) {
+      if (error instanceof Error) Modal.error({ content: error.message });
     }
   };
 
-  const onClickUpdate = async () => {
+  const onClickUpdate = async (data: IBoardCommentData) => {
     if (!props.el?._id) return;
 
+    const { password, contents } = data;
     const myUpdateBoardCommentInput: ImyUpdateBoardCommentInputProps = {};
     if (contents) myUpdateBoardCommentInput.contents = contents;
-    if (rating !== props.el?.rating) myUpdateBoardCommentInput.rating = rating;
+    if (rating) myUpdateBoardCommentInput.rating = rating;
 
     try {
       await updateBoardComment({
@@ -99,12 +93,8 @@ export default function BoardCommentWrite(props: IBoardWriteProps) {
           },
         ],
       });
-      alert("댓글이 수정되었습니다!");
       props.setIsEdit?.(false);
-      setWriter("");
-      setPassword("");
-      setContents("");
-      setRating(0);
+      Modal.success({ content: "댓글이 수정되었습니다!" });
     } catch (error) {
       if (error instanceof Error) alert(error.message);
     }
@@ -112,18 +102,16 @@ export default function BoardCommentWrite(props: IBoardWriteProps) {
 
   return (
     <BoardCommentWriteUI
-      onChangeWriter={onChangeWriter}
-      onChangePassword={onChangePassword}
-      onChangeContents={onChangeContents}
       onChangeRating={onChangeRating}
       onClickSubmit={onClickSubmit}
       onClickUpdate={onClickUpdate}
-      writer={writer}
-      password={password}
-      contents={contents}
+      handleSubmit={handleSubmit}
+      register={register}
+      formState={formState}
       rating={rating}
       isEdit={props.isEdit}
       el={props.el}
+      ContentsValue={ContentsValue}
     />
   );
 }

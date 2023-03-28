@@ -2,7 +2,7 @@ import { useMutation } from "@apollo/client";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Modal } from "antd";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 // prettier-ignore
 import {IMutation,IMutationCreateUseditemArgs,IMutationUpdateUseditemArgs,
@@ -16,6 +16,7 @@ import { schema } from "./MarketWrite.yup";
 export default function MarketWrite(props: IMarketWriteProps) {
   const router = useRouter();
   const [imageUrls, setImageUrls] = useState(["", "", ""]);
+  const [files, setFiles] = useState(["", "", ""]);
 
   // prettier-ignore
   const [createUseditem] = useMutation<Pick<IMutation, "createUseditem">,IMutationCreateUseditemArgs>(CREATE_USEDITEM);
@@ -35,19 +36,26 @@ export default function MarketWrite(props: IMarketWriteProps) {
     void trigger("contents");
   };
 
-  const onChangeFileUrl = (fileUrl: string, index: number) => {
+  const onChangeFileUrl = (imageUrl: string, fileUrl: string, index: number) => {
+    const newFiles = [...files];
+    newFiles[index] = imageUrl;
+    setFiles(newFiles);
+    console.log(files);
+
     const newFileUrl = [...imageUrls];
     newFileUrl[index] = fileUrl;
     setImageUrls(newFileUrl);
-
-    setValue("images", imageUrls);
     console.log(imageUrls);
-
-    void trigger("images");
   };
 
+  useEffect(() => {
+    if (props.data?.fetchUseditem.images?.length) {
+      setImageUrls([...props.data.fetchUseditem.images]);
+    }
+  }, []);
+
   const onClickMarketWrite = async (data: IMarketWriteData) => {
-    const { name, remarks, contents, price, tags, useditemAddress, images } = data;
+    const { name, remarks, contents, price, tags, useditemAddress } = data;
     try {
       const result = await createUseditem({
         variables: {
@@ -56,7 +64,7 @@ export default function MarketWrite(props: IMarketWriteProps) {
             remarks,
             contents,
             price,
-            images,
+            images: imageUrls,
           },
         },
         refetchQueries: [{ query: FETCH_USEDITEMS }],
@@ -106,6 +114,7 @@ export default function MarketWrite(props: IMarketWriteProps) {
       onChangeContents={onChangeContents}
       onChangeFileUrl={onChangeFileUrl}
       isEdit={props.isEdit}
+      data={props.data}
       imageUrls={imageUrls}
     />
   );

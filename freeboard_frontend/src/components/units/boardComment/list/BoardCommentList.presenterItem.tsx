@@ -12,11 +12,12 @@ import * as S from "../list/BoardCommentList.styles";
 import BoardCommentWrite from "../write/BoardCommentWrite.container";
 import { DELETE_BOARD_COMMENT, FETCH_BOARD_COMMENTS } from "./BoardCommentList.queries";
 import type { IBoardCommentListUIItemProps } from "./BoardCommentList.types";
+import { useOpen } from "../../../commons/hooks/useOpen";
 
 export default function BoardCommentListUIItem(props: IBoardCommentListUIItemProps) {
   const router = useRouter();
   const [isEdit, setIsEdit] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
+  const { isOpen, onToggleModal } = useOpen();
   const [password, setPassword] = useState("");
 
   const [deleteBoardComment] = useMutation<
@@ -26,10 +27,6 @@ export default function BoardCommentListUIItem(props: IBoardCommentListUIItemPro
 
   const onClickUpdate = () => {
     setIsEdit(true);
-  };
-
-  const onToggleModal = () => {
-    setIsOpen((prev) => !prev);
   };
 
   const onInputPassword = (event: ChangeEvent<HTMLInputElement>) => {

@@ -1,7 +1,7 @@
-import * as S from "../write/BoardCommentWrite.styles";
-import type { IBoardCommentWriteUIProps } from "./BoardCommentWrite.types";
+import * as S from "../write/MarketCommentWrite.styles";
+import { IMarketCommentWriteUIProps } from "./MarketCommentWrite.types";
 
-export default function BoardCommentWriteUI(props: IBoardCommentWriteUIProps) {
+export default function MarketCommentWriteUI(props: IMarketCommentWriteUIProps) {
   return (
     <S.Wrapper
       onSubmit={
@@ -13,20 +13,9 @@ export default function BoardCommentWriteUI(props: IBoardCommentWriteUIProps) {
       {!props.isEdit && (
         <S.TitleWrapper>
           <S.PencilIcon src="/images/boardComment/write/pencil.png" />
-          <span>댓글</span>
+          <span>문의하기</span>
         </S.TitleWrapper>
       )}
-      <S.InputWrapper>
-        <S.Input
-          type="text"
-          placeholder="작성자"
-          defaultValue={props.el?.writer || ""}
-          readOnly={!!props.el?.writer}
-          {...props.register("writer")}
-        />
-        <S.Input type="password" placeholder="비밀번호" {...props.register("password")} />
-        <S.RateIcon value={props.rating || props.el?.rating || 0} onChange={props.onChangeRating} />
-      </S.InputWrapper>
       <S.ContentsWrapper>
         <S.Contents
           maxLength={100}
@@ -36,11 +25,7 @@ export default function BoardCommentWriteUI(props: IBoardCommentWriteUIProps) {
         />
         <S.BottomWrapper>
           <S.ContentsLength>{props.ContentsValue.length}/100</S.ContentsLength>
-          <S.ErrorMessage>
-            {props.formState.errors.contents?.message ||
-              props.formState.errors.password?.message ||
-              props.formState.errors.writer?.message}
-          </S.ErrorMessage>
+          <S.ErrorMessage>{props.formState.errors.contents?.message}</S.ErrorMessage>
           <S.Button>{props.isEdit ? "수정하기" : "등록하기"}</S.Button>
         </S.BottomWrapper>
       </S.ContentsWrapper>

@@ -1,5 +1,6 @@
-import type { ChangeEvent, Dispatch, SetStateAction } from "react";
+import type { Dispatch, SetStateAction } from "react";
 import type { IBoardComment } from "../../../../commons/types/generated/types";
+import { FormState, UseFormHandleSubmit, UseFormRegister } from "react-hook-form";
 
 export interface IBoardWriteProps {
   isEdit?: boolean;
@@ -8,21 +9,25 @@ export interface IBoardWriteProps {
 }
 
 export interface IBoardCommentWriteUIProps {
-  onChangeWriter: (event: ChangeEvent<HTMLInputElement>) => void;
-  onChangePassword: (event: ChangeEvent<HTMLInputElement>) => void;
-  onChangeContents: (event: ChangeEvent<HTMLTextAreaElement>) => void;
   onChangeRating: (value: number) => void;
-  onClickSubmit: () => void;
-  onClickUpdate: () => void;
-  writer: string;
-  password: string;
-  contents: string;
+  onClickSubmit: (data: IBoardCommentData) => Promise<void>;
+  onClickUpdate: (data: IBoardCommentData) => Promise<void>;
+  register: UseFormRegister<IBoardCommentData>;
+  handleSubmit: UseFormHandleSubmit<IBoardCommentData>;
+  formState: FormState<IBoardCommentData>;
   rating: number;
   isEdit?: boolean;
   el?: IBoardComment;
+  ContentsValue: string;
 }
 
 export interface ImyUpdateBoardCommentInputProps {
   contents?: string;
   rating?: number;
+}
+
+export interface IBoardCommentData {
+  writer: string;
+  password: string;
+  contents: string;
 }
