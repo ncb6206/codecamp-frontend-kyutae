@@ -93,7 +93,7 @@ export default function BoardCommentWrite(props: IBoardWriteProps) {
           },
         ],
       });
-      props.setIsEdit?.(false);
+      props.onClickUpdate();
       Modal.success({ content: "댓글이 수정되었습니다!" });
     } catch (error) {
       if (error instanceof Error) alert(error.message);

@@ -13,10 +13,12 @@ import BoardCommentWrite from "../write/BoardCommentWrite.container";
 import { DELETE_BOARD_COMMENT, FETCH_BOARD_COMMENTS } from "./BoardCommentList.queries";
 import type { IBoardCommentListUIItemProps } from "./BoardCommentList.types";
 import { useOpen } from "../../../commons/hooks/useOpen";
+import { useEdit } from "../../../commons/hooks/useEdit";
 
 export default function BoardCommentListUIItem(props: IBoardCommentListUIItemProps) {
   const router = useRouter();
-  const [isEdit, setIsEdit] = useState(false);
+  // const [isEdit, setIsEdit] = useState(false);
+  const { isEdit, onClickUpdate } = useEdit();
   const { isOpen, onToggleModal } = useOpen();
   const [password, setPassword] = useState("");
 
@@ -25,9 +27,9 @@ export default function BoardCommentListUIItem(props: IBoardCommentListUIItemPro
     IMutationDeleteBoardCommentArgs
   >(DELETE_BOARD_COMMENT);
 
-  const onClickUpdate = () => {
-    setIsEdit(true);
-  };
+  // const onClickUpdate = () => {
+  //   setIsEdit(true);
+  // };
 
   const onInputPassword = (event: ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
@@ -95,7 +97,7 @@ export default function BoardCommentListUIItem(props: IBoardCommentListUIItemPro
           <S.DateString onClick={onClickWriter}>{getMyDate(props.el?.createdAt)}</S.DateString>
         </S.ItemWrapper>
       )}
-      {isEdit && <BoardCommentWrite isEdit={true} setIsEdit={setIsEdit} el={props.el} />}
+      {isEdit && <BoardCommentWrite isEdit={true} onClickUpdate={onClickUpdate} el={props.el} />}
     </>
   );
 }

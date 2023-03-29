@@ -4,7 +4,7 @@ import { FormState, UseFormHandleSubmit, UseFormRegister } from "react-hook-form
 
 export interface IBoardWriteProps {
   isEdit?: boolean;
-  setIsEdit?: Dispatch<SetStateAction<boolean>>;
+  onClickUpdate: () => void;
   el?: IBoardComment;
 }
 

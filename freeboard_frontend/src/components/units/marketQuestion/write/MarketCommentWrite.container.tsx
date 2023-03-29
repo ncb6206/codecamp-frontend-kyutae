@@ -13,10 +13,10 @@ import { ImyUpdateBoardCommentInputProps } from "../../boardComment/write/BoardC
 import { FETCH_USEDITEM_QUESTIONS } from "../list/MarketCommentList.queries";
 import MarketCommentWriteUI from "./MarketCommentWrite.presenter";
 import { CREATE_USEDITEM_QUESTION, UPDATE_USEDITEM_QUESTION } from "./MarketCommentWrite.queries";
-import { IUseditemCommentData } from "./MarketCommentWrite.types";
+import { IMarketCommentWriteProps, IUseditemCommentData } from "./MarketCommentWrite.types";
 import { schema } from "./MarketCommentWrite.yup";
 
-export default function MarketCommentWrite() {
+export default function MarketCommentWrite(props: IMarketCommentWriteProps) {
   const router = useRouter();
   const { register, handleSubmit, formState, reset, watch } = useForm<IUseditemCommentData>({
     resolver: yupResolver(schema),
