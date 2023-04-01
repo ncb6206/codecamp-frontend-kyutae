@@ -6,7 +6,7 @@ export default function BoardCommentWriteUI(props: IBoardCommentWriteUIProps) {
     <S.Wrapper
       onSubmit={
         props.isEdit
-          ? props.handleSubmit(props.onClickUpdate)
+          ? props.handleSubmit(props.onClickUpdateBoardComment)
           : props.handleSubmit(props.onClickSubmit)
       }
     >
@@ -35,7 +35,9 @@ export default function BoardCommentWriteUI(props: IBoardCommentWriteUIProps) {
           {...props.register("contents")}
         />
         <S.BottomWrapper>
-          <S.ContentsLength>{props.ContentsValue.length}/100</S.ContentsLength>
+          <S.ContentsLength>
+            {props.ContentsValue ? props.ContentsValue.length : 0}/100
+          </S.ContentsLength>
           <S.ErrorMessage>
             {props.formState.errors.contents?.message ||
               props.formState.errors.password?.message ||

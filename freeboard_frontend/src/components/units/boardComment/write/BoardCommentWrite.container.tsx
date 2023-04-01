@@ -71,7 +71,7 @@ export default function BoardCommentWrite(props: IBoardWriteProps) {
     }
   };
 
-  const onClickUpdate = async (data: IBoardCommentData) => {
+  const onClickUpdateBoardComment = async (data: IBoardCommentData) => {
     if (!props.el?._id) return;
 
     const { password, contents } = data;
@@ -104,7 +104,7 @@ export default function BoardCommentWrite(props: IBoardWriteProps) {
     <BoardCommentWriteUI
       onChangeRating={onChangeRating}
       onClickSubmit={onClickSubmit}
-      onClickUpdate={onClickUpdate}
+      onClickUpdateBoardComment={onClickUpdateBoardComment}
       handleSubmit={handleSubmit}
       register={register}
       formState={formState}

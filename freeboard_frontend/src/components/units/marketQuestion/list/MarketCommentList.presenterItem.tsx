@@ -7,7 +7,6 @@ import {
   IMutationDeleteUseditemQuestionArgs,
 } from "../../../../commons/types/generated/types";
 import { useEdit } from "../../../commons/hooks/useEdit";
-import { useOpen } from "../../../commons/hooks/useOpen";
 import { DELETE_USEDITEM_QUESTION, FETCH_USEDITEM_QUESTIONS } from "./MarketCommentList.queries";
 import { IMarketCommentListUIItemProps } from "./MarketCommentList.types";
 import { getMyDate } from "../../../../commons/libraries/util";
@@ -16,7 +15,6 @@ import MarketCommentWrite from "../write/MarketCommentWrite.container";
 export default function MarketCommentListUIItem(props: IMarketCommentListUIItemProps) {
   const router = useRouter();
   const { isEdit, onClickUpdate } = useEdit();
-  const { isOpen, onToggleModal } = useOpen();
 
   const [deleteUseditemQuestion] = useMutation<
     Pick<IMutation, "deleteUseditemQuestion">,
@@ -58,7 +56,7 @@ export default function MarketCommentListUIItem(props: IMarketCommentListUIItemP
               />
               <S.DeleteIcon
                 src="/images/boardComment/list/option_delete_icon.png"
-                onClick={onToggleModal}
+                onClick={onClickDelete}
               />
             </S.OptionWrapper>
           </S.FlexWrapper>

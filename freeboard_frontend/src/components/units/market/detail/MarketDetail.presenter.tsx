@@ -1,7 +1,7 @@
 import { IMarketDetailUIProps } from "./MarketDetail.types";
 import * as S from "./MarketDetail.styles";
 import { getMyDate } from "../../../../commons/libraries/util";
-import Dompurify from "dompurify";
+import DOMPurify from "dompurify";
 
 export default function MarketDetailUI(props: IMarketDetailUIProps) {
   console.log(props.data?.fetchUseditem);
@@ -27,7 +27,7 @@ export default function MarketDetailUI(props: IMarketDetailUIProps) {
           <S.Title>{props.data?.fetchUseditem?.remarks}</S.Title>
           <S.Contents
             dangerouslySetInnerHTML={{
-              __html: Dompurify.sanitize(props.data?.fetchUseditem?.contents ?? ""),
+              __html: DOMPurify.sanitize(props.data?.fetchUseditem?.contents || ""),
             }}
           />
           <S.ImageWrapper>

@@ -5,8 +5,11 @@ export interface IMarketCommentWriteUIProps {
   onClickSubmit: (data: IUseditemCommentData) => Promise<void>;
   handleSubmit: UseFormHandleSubmit<IUseditemCommentData>;
   register: UseFormRegister<IUseditemCommentData>;
+  onClickUpdateMarketComment: (data: IUseditemCommentData) => Promise<void>;
   formState: FormState<IUseditemCommentData>;
   ContentsValue: string;
+  el?: IUseditemQuestion;
+  isEdit?: boolean;
 }
 
 export interface ImyUpdateUseditemCommentInputProps {

@@ -17,7 +17,6 @@ import { useEdit } from "../../../commons/hooks/useEdit";
 
 export default function BoardCommentListUIItem(props: IBoardCommentListUIItemProps) {
   const router = useRouter();
-  // const [isEdit, setIsEdit] = useState(false);
   const { isEdit, onClickUpdate } = useEdit();
   const { isOpen, onToggleModal } = useOpen();
   const [password, setPassword] = useState("");
@@ -26,10 +25,6 @@ export default function BoardCommentListUIItem(props: IBoardCommentListUIItemPro
     Pick<IMutation, "deleteBoardComment">,
     IMutationDeleteBoardCommentArgs
   >(DELETE_BOARD_COMMENT);
-
-  // const onClickUpdate = () => {
-  //   setIsEdit(true);
-  // };
 
   const onInputPassword = (event: ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value);
@@ -49,13 +44,13 @@ export default function BoardCommentListUIItem(props: IBoardCommentListUIItemPro
           },
         ],
       });
-    } catch (error: any) {
-      alert(error.message);
+    } catch (error) {
+      if (error instanceof Error) Modal.error({ content: error.message });
     }
   };
 
   const onClickWriter = () => {
-    alert(`${String(props.el?.writer)}님이 작성한 글입니다.`);
+    Modal.success({ content: `${String(props.el?.writer)}님이 작성한 글입니다.` });
   };
 
   return (

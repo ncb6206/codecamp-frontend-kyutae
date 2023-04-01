@@ -6,7 +6,7 @@ export default function MarketCommentWriteUI(props: IMarketCommentWriteUIProps) 
     <S.Wrapper
       onSubmit={
         props.isEdit
-          ? props.handleSubmit(props.onClickUpdate)
+          ? props.handleSubmit(props.onClickUpdateMarketComment)
           : props.handleSubmit(props.onClickSubmit)
       }
     >
@@ -24,7 +24,9 @@ export default function MarketCommentWriteUI(props: IMarketCommentWriteUIProps) 
           {...props.register("contents")}
         />
         <S.BottomWrapper>
-          <S.ContentsLength>{props.ContentsValue.length}/100</S.ContentsLength>
+          <S.ContentsLength>
+            {props.ContentsValue ? props.ContentsValue.length : 0}/100
+          </S.ContentsLength>
           <S.ErrorMessage>{props.formState.errors.contents?.message}</S.ErrorMessage>
           <S.Button>{props.isEdit ? "수정하기" : "등록하기"}</S.Button>
         </S.BottomWrapper>

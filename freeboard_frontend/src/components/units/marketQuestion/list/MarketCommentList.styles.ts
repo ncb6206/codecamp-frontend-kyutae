@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import Rate from "antd/lib/rate";
 
 export const ItemWrapper = styled.div`
   width: 60rem;

@@ -9,11 +9,14 @@ import {
   IMutationCreateUseditemQuestionArgs,
   IMutationUpdateUseditemQuestionArgs,
 } from "../../../../commons/types/generated/types";
-import { ImyUpdateBoardCommentInputProps } from "../../boardComment/write/BoardCommentWrite.types";
 import { FETCH_USEDITEM_QUESTIONS } from "../list/MarketCommentList.queries";
 import MarketCommentWriteUI from "./MarketCommentWrite.presenter";
 import { CREATE_USEDITEM_QUESTION, UPDATE_USEDITEM_QUESTION } from "./MarketCommentWrite.queries";
-import { IMarketCommentWriteProps, IUseditemCommentData } from "./MarketCommentWrite.types";
+import {
+  IMarketCommentWriteProps,
+  ImyUpdateUseditemCommentInputProps,
+  IUseditemCommentData,
+} from "./MarketCommentWrite.types";
 import { schema } from "./MarketCommentWrite.yup";
 
 export default function MarketCommentWrite(props: IMarketCommentWriteProps) {
@@ -53,30 +56,31 @@ export default function MarketCommentWrite(props: IMarketCommentWriteProps) {
     }
   };
 
-  // const onClickUpdate = async (data: IUseditemCommentData) => {
-  //   if (!props.el?._id) return;
-  //   const { contents } = data;
+  const onClickUpdateMarketComment = async (data: IUseditemCommentData) => {
+    if (!props.el?._id) return;
 
-  //   const myUpdateUseditemCommentInput: ImyUpdateBoardCommentInputProps = {};
-  //   if (contents) myUpdateUseditemCommentInput.contents = contents;
+    const { contents } = data;
+    const myUpdateUseditemCommentInput: ImyUpdateUseditemCommentInputProps = {};
+    if (contents) myUpdateUseditemCommentInput.contents = contents;
 
-  //   try {
-  //     await updateUseditemQuestion({
-  //       variables: {
-  //         useditemQuestionId: String(props.el?._id),
-  //         updateUseditemQuestionInput: myUpdateUseditemCommentInput,
-  //       },
-  //       refetchQueries: [
-  //         {
-  //           query: FETCH_USEDITEM_QUESTIONS,
-  //           variables: { useditemId: String(router.query.useditemId) },
-  //         },
-  //       ],
-  //     });
-  //   } catch (error) {
-  //     if (error instanceof Error) Modal.error({ content: error.message });
-  //   }
-  // };
+    try {
+      await updateUseditemQuestion({
+        variables: {
+          useditemQuestionId: String(props.el?._id),
+          updateUseditemQuestionInput: myUpdateUseditemCommentInput,
+        },
+        refetchQueries: [
+          {
+            query: FETCH_USEDITEM_QUESTIONS,
+            variables: { useditemId: String(router.query.useditemId) },
+          },
+        ],
+      });
+      props.onClickUpdate();
+    } catch (error) {
+      if (error instanceof Error) Modal.error({ content: error.message });
+    }
+  };
 
   return (
     <MarketCommentWriteUI
@@ -85,6 +89,9 @@ export default function MarketCommentWrite(props: IMarketCommentWriteProps) {
       register={register}
       formState={formState}
       ContentsValue={ContentsValue}
+      isEdit={props.isEdit}
+      el={props.el}
+      onClickUpdateMarketComment={onClickUpdateMarketComment}
     />
   );
 }
