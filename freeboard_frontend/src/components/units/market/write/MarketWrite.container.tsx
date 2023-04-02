@@ -82,9 +82,18 @@ export default function MarketWrite(props: IMarketWriteProps) {
   };
 
   const onClickEdit = async (data: IMarketWriteData) => {
-    const { name, remarks, contents, price, tags, useditemAddress, images } = data;
+    const currentFiles = JSON.stringify(imageUrls);
+    const defaultFiles = JSON.stringify(props.data?.fetchUseditem.images);
+    const isChangeFiles = currentFiles !== defaultFiles;
+
+    const { name, remarks, contents, price, tags, useditemAddress } = data;
 
     const myUpdateUseditemInput: ImyUpdateUseditemInput = {};
+    if (name) myUpdateUseditemInput.name = name;
+    if (remarks) myUpdateUseditemInput.remarks = remarks;
+    if (contents) myUpdateUseditemInput.contents = contents;
+    if (price) myUpdateUseditemInput.price = price;
+    if (isChangeFiles) myUpdateUseditemInput.images = imageUrls;
     try {
       const result = await updateUseditem({
         variables: {

@@ -25,12 +25,12 @@ export default function BoardList() {
   return (
     <BoardListUI
       data={data}
-      onClickMoveToPage={onClickMoveToPage}
       count={dataBoardsCount?.fetchBoardsCount}
+      refetch={refetch}
       refetchBoardsCount={refetchBoardsCount}
+      onClickMoveToPage={onClickMoveToPage}
       onChangeKeyword={onChangeKeyword}
       keyword={keyword}
-      refetch={refetch}
     />
   );
 }

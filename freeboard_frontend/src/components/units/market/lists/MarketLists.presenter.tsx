@@ -23,9 +23,9 @@ export default function MarketListsUI(props: IMarketListsUIProps) {
                 dangerouslySetInnerHTML={{ __html: Dompurify.sanitize(el.contents) }}
               />
               <S.ListRemarks>{el.remarks}</S.ListRemarks>
-              <S.ListPickedCount>{el.pickedCount}</S.ListPickedCount>
+              <S.ListPickedCount>찜 : {el.pickedCount}</S.ListPickedCount>
             </S.ListContent>
-            <S.ListPrice>{el.price}</S.ListPrice>
+            <S.ListPrice>{el.price}원</S.ListPrice>
           </S.ListRow>
         ))}
       </S.ListWrapper>

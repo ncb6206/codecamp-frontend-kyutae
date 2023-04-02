@@ -6,7 +6,8 @@ export function useMoveToPage() {
   const router = useRouter();
   const [visitedPage, setVisitedPage] = useRecoilState(visitedPageState);
 
-  const onClickMoveToPage = (path: string) => () => {
+  const onClickMoveToPage = (path: string) => (event: any) => {
+    event.preventDefault();
     setVisitedPage(path);
     void router.push(path);
   };
