@@ -4,7 +4,7 @@
 # RUN sudo apt install -y nodejs
 # RUN sudo npm install -g yarn
 
-FROM node:14
+FROM node:16
 
 COPY ./package.json /class_build/
 COPY ./yarn.lock /class_build/
